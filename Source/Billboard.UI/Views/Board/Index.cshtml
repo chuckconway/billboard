@@ -1,0 +1,52 @@
+﻿@model Billboard.UI.Models.Board.BoardView 
+
+@{
+    ViewBag.Title = "Chuck and Erin's Wedding 2012";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+@section Head{
+    <script src="/Script/frameworks/jquery.1.8.3.min.js"></script>
+    <script type="text/javascript">
+
+        var messages = [];
+        var currentIndex = 0;
+
+        $(function() {
+            GetMessages();
+            setInterval(GetMessages, 30000);
+            
+            UpdateUI();
+            setInterval(UpdateUI, 5000);
+        });
+
+        function UpdateUI() {
+
+            if (messages.length > 0) {
+                var message = messages.shift();
+                var element = $('<div>').attr('class','message').html('<h2>' + message.From + ' - ' + message.Received +'</h2><p>' + message.Body + '</p>');
+                $('div.messages').append(element);
+                //alert(messages.length);
+            }
+        }
+
+        function GetMessages() {
+            var id = @Model.EventId;
+            
+            $.post('/board/messages/?id=' + id, function(data) {
+
+                for (var index = 0; index < data.length; index++) {
+
+                    messages[messages.length] = data[index];
+                }
+
+                //alert(messages.length);
+            });
+        }
+
+    </script>
+}
+
+<div class="messages" >
+</div>
+
