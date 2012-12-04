@@ -84,6 +84,7 @@
     <Compile Include="DependencyInjection.cs" />
     <Compile Include="Integration\Event_Database_Interaction.cs" />
     <Compile Include="Integration\Message_Database_Interaction.cs" />
+    <Compile Include="Integration\Timezone_Database_Interaction.cs" />
     <Compile Include="Integration\User_Database_Interaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
