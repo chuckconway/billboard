@@ -6,8 +6,10 @@ using System.Web.Routing;
 using Billboard.Data.Mapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using Hypersonic;
 using NHibernate;
 using StructureMap;
+using ISession = NHibernate.ISession;
 
 namespace Billboard.UI
 {
@@ -25,6 +27,11 @@ namespace Billboard.UI
             RegisterDependencyInjection();
         }
 
+        protected void Application_EndRequest()
+        {
+            ObjectFactory.ReleaseAndDisposeAllHttpScopedObjects();
+        }
+
         private void RegisterDependencyInjection()
         {
             ObjectFactory.Initialize(x => x.Scan(s =>
@@ -32,6 +39,7 @@ namespace Billboard.UI
                 //x.For<IDatabase>().Use(new MsSqlDatabase());
                 //x.For<IConfigurationService>().Use<MomntzConfiguration>();
                 x.For<ISession>().HttpContextScoped().Use(CreateSessionFactory().OpenSession);
+                x.For<IDatabase>().Use(new MsSqlDatabase(key:"sql"));
                 //x.For<IProjectionProcessor>().Use<ProjectionProcessor>();
 
                 s.TheCallingAssembly();

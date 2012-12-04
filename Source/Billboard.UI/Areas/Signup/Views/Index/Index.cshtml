@@ -1,28 +1,41 @@
-﻿@model dynamic
+﻿@model IEnumerable<SelectListItem>
 
 @{
     ViewBag.Title = "title";
-    Layout = "_Layout";
+    Layout = "/Areas/Signup/Views/Shared/_Layout.cshtml";
 }
 
-<p>
-    <label>Username</label>
-    <input type="text" name="username" />
-</p>
+@using (Html.BeginForm())
+{
+    <p>
+        <label>Email</label>
+        <input type="text" name="email" />
+    </p>
+    
+    <p>
+        <label>Username</label>
+        <input type="text" name="username" />
+    </p>
 
-<p>
-    <label>Password</label>
-    <input type="text" name="password"  />
-</p>
+    <p>
+        <label>Password</label>
+        <input type="text" name="password"  />
+    </p>
 
-<p>
-    <label>Confirm</label>
-    <input type="text" name="confirm"  />
-</p>
+    <p>
+        <label>Confirm</label>
+        <input type="text" name="confirm"  />
+    </p>
 
-<p>
-    <label>Display Name</label>
-    <input type="text" name="displayname"   />
-</p>
+    <p>
+        <label>Display Name</label>
+        <input type="text" name="displayname"   />
+    </p>
 
-<input type="submit" name="Create" />
+    <p>
+        <label>Default Timezone</label>
+        @Html.DropDownList("timezone", Model)
+    </p>
+
+    <input type="submit" name="Create" />
+}

@@ -46,5 +46,10 @@ namespace Billboard.Data.Model
         /// <value>The price.</value>
         public virtual decimal Price { get; set; }
 
+        /// <summary>
+        /// Gets or sets the timezone.
+        /// </summary>
+        /// <value>The timezone.</value>
+        public virtual Timezone Timezone { get; set; }
     }
 }

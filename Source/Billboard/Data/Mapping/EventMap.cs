@@ -28,6 +28,8 @@ namespace Billboard.Data.Mapping
 
             Map(x => x.Price)
                 .Nullable();
+
+            References(m => m.Timezone, "TimezoneId");
         }
     }
 }

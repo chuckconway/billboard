@@ -24,6 +24,8 @@ namespace Billboard.Data.Mapping
             Map(x => x.Username)
                 .Not.Nullable()
                 .Length(100);
+
+            References(m => m.Timezone, "TimezoneId");
         }
     }
 }
