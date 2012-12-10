@@ -27,6 +27,11 @@
             $('input#timestart').timepicker();
             $('input#timeend').timepicker();
 
+            $('input#cancel').click(function () {
+                parent.$.fancybox.close();
+                return false;
+            });
+
             $('a#getnumber').click(function () {
                 var spinner = $('img#spinner');
                 spinner.show();
@@ -46,7 +51,7 @@
     <link href="~/Script/plugins/timepicker/jquery.timepicker.css" rel="stylesheet" />
 }
 
-    <h2>Edit Event</h2>
+    <h2>Create Event</h2>
 
     @using (Html.BeginForm())
     {
@@ -84,5 +89,5 @@
         </p>
 
         <input type="submit" class="btn" value="Save" />
-        <input type="submit" class="btn" value="Cancel" />
+        <input type="submit" id="cancel" class="btn" value="Cancel" />
     }

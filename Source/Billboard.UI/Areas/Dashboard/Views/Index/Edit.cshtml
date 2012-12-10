@@ -24,6 +24,11 @@
                     'autoclose': true
             });
             
+            $('input#cancel').click(function () {
+                parent.$.fancybox.close();
+                return false;
+            });
+
             $('input#timestart').timepicker();
             $('input#timeend').timepicker();
             
@@ -85,5 +90,5 @@
         </p>
 
         <input type="submit" class="btn" value="Save" />
-        <input type="submit" class="btn" value="Cancel" />
+        <input type="submit" id="cancel" class="btn" value="Cancel" />
     }
