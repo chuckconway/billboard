@@ -53,39 +53,6 @@ namespace Billboard.UI.Controllers
 
             var items =_database.List<Message, object>("[dbo].[Message_GetMessageByEventId]", new {eventId = id, now});
 
-
-            //using (var trans = _session.BeginTransaction())
-            //{
-            //  evt = _session.QueryOver<Event>()
-            //            .Where(e => e.StartTime <= now)
-            //            .And(e => e.EndTime >= now)
-            //            .And(e => e.Id == id)
-            //            .SingleOrDefault();
-                
-            //    msges = query.List<Message>();
-            //    trans.Commit();
-            //}
-
-
-            //var messages = new[]
-            //                   {
-            //                       new {Id=Randomizer.NextNumber(1000), From="916.123.1076", Body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nunc, varius quis fermentum sed, convallis eget mi. Sed tellus tellus, malesuada sed sollicitudin et, interdum ut sapien. ", Received=DateTime.Now.ToShortTimeString()},
-            //                       new {Id=Randomizer.NextNumber(1000), From="916.123.9076", Body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nunc, varius quis fermentum sed, convallis eget mi. Sed tellus tellus, malesuada sed sollicitudin et, interdum ut sapien. ", Received=DateTime.Now.ToShortTimeString()},
-            //                       new {Id=Randomizer.NextNumber(1000), From="916.123.0076", Body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nunc, varius quis fermentum sed, convallis eget mi. Sed tellus tellus, malesuada sed sollicitudin et, interdum ut sapien. ", Received=DateTime.Now.ToShortTimeString()},
-            //                       new {Id=Randomizer.NextNumber(1000), From="916.123.9076", Body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nunc, varius quis fermentum sed, convallis eget mi. Sed tellus tellus, malesuada sed sollicitudin et, interdum ut sapien. ", Received=DateTime.Now.ToShortTimeString()},
-            //                       new {Id=Randomizer.NextNumber(1000), From="916.123.9076", Body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nunc, varius quis fermentum sed, convallis eget mi. Sed tellus tellus, malesuada sed sollicitudin et, interdum ut sapien. ", Received=DateTime.Now.ToShortTimeString()},
-            //                       new {Id=Randomizer.NextNumber(1000), From="916.123.8076", Body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nunc, varius quis fermentum sed, convallis eget mi. Sed tellus tellus, malesuada sed sollicitudin et, interdum ut sapien. ", Received=DateTime.Now.ToShortTimeString()},
-            //                       new {Id=Randomizer.NextNumber(1000), From="916.123.9076", Body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nunc, varius quis fermentum sed, convallis eget mi. Sed tellus tellus, malesuada sed sollicitudin et, interdum ut sapien. ", Received=DateTime.Now.ToShortTimeString()},
-            //                       new {Id=Randomizer.NextNumber(1000), From="916.123.9076", Body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nunc, varius quis fermentum sed, convallis eget mi. Sed tellus tellus, malesuada sed sollicitudin et, interdum ut sapien. ", Received=DateTime.Now.ToShortTimeString()},
-            //                       new {Id=Randomizer.NextNumber(1000), From="916.123.9075", Body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nunc, varius quis fermentum sed, convallis eget mi. Sed tellus tellus, malesuada sed sollicitudin et, interdum ut sapien. ", Received=DateTime.Now.ToShortTimeString()},
-            //                       new {Id=Randomizer.NextNumber(1000), From="916.123.9076", Body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nunc, varius quis fermentum sed, convallis eget mi. Sed tellus tellus, malesuada sed sollicitudin et, interdum ut sapien. ", Received=DateTime.Now.ToShortTimeString()},
-            //                       new {Id=Randomizer.NextNumber(1000), From="916.123.6076", Body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nunc, varius quis fermentum sed, convallis eget mi. Sed tellus tellus, malesuada sed sollicitudin et, interdum ut sapien. ", Received=DateTime.Now.ToShortTimeString()},
-            //                       new {Id=Randomizer.NextNumber(1000), From="916.123.9074", Body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nunc, varius quis fermentum sed, convallis eget mi. Sed tellus tellus, malesuada sed sollicitudin et, interdum ut sapien. ", Received=DateTime.Now.ToShortTimeString()},
-            //                       new {Id=Randomizer.NextNumber(1000), From="916.123.9076", Body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nunc, varius quis fermentum sed, convallis eget mi. Sed tellus tellus, malesuada sed sollicitudin et, interdum ut sapien. ", Received=DateTime.Now.ToShortTimeString()},
-            //                       new {Id=Randomizer.NextNumber(1000), From="916.123.9073", Body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nunc, varius quis fermentum sed, convallis eget mi. Sed tellus tellus, malesuada sed sollicitudin et, interdum ut sapien. ", Received=DateTime.Now.ToShortTimeString()},
-            //                       new {Id=Randomizer.NextNumber(1000), From="916.123.9076", Body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nunc, varius quis fermentum sed, convallis eget mi. Sed tellus tellus, malesuada sed sollicitudin et, interdum ut sapien. ", Received=DateTime.Now.ToShortTimeString()},
-            //                   };
-
             string json = JsonConvert.SerializeObject(items);
             return Content(json, "application/json; charset=utf-8");
         }

@@ -69,19 +69,28 @@
     <Reference Include="nunit.framework">
       <HintPath>..\..\Dependencies\nUnit\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\Billboard\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\..\Dependencies\StructureMap\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Twilio.Api">
+      <HintPath>..\Billboard\packages\Twilio.3.5.5\lib\3.5\Twilio.Api.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\MockAuthenticatedUser.cs" />
     <Compile Include="DependencyInjection.cs" />
+    <Compile Include="Integration\AvailableNumbers_Api_GetTestNumbers.cs" />
     <Compile Include="Integration\Event_Database_Interaction.cs" />
     <Compile Include="Integration\Message_Database_Interaction.cs" />
     <Compile Include="Integration\Timezone_Database_Interaction.cs" />
@@ -95,6 +104,10 @@
     <Folder Include="Unit\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Billboard.UI\Billboard.UI.csproj">
+      <Project>{c7c84b3c-95e5-46d2-b9cd-b0fa7b2f9744}</Project>
+      <Name>Billboard.UI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Billboard\Billboard.csproj">
       <Project>{59fc5f62-e115-47c7-ad31-1c2a2127d30a}</Project>
       <Name>Billboard</Name>

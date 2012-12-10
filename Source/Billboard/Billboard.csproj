@@ -60,6 +60,9 @@
     <Reference Include="FluentNHibernate">
       <HintPath>..\..\Dependencies\nHibernate\FluentNHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\Dependencies\Json.Net\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\..\Dependencies\nHibernate\NHibernate.dll</HintPath>
     </Reference>

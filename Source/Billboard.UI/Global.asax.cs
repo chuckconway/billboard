@@ -17,6 +17,9 @@ namespace Billboard.UI
     // visit http://go.microsoft.com/?LinkId=9394801
     public class MvcApplication : System.Web.HttpApplication
     {
+        /// <summary>
+        /// Application_s the start.
+        /// </summary>
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -27,32 +30,28 @@ namespace Billboard.UI
             RegisterDependencyInjection();
         }
 
+        /// <summary>
+        /// Application_s the end request.
+        /// </summary>
         protected void Application_EndRequest()
         {
             ObjectFactory.ReleaseAndDisposeAllHttpScopedObjects();
         }
 
+        /// <summary>
+        /// Registers the dependency injection.
+        /// </summary>
         private void RegisterDependencyInjection()
         {
             ObjectFactory.Initialize(x => x.Scan(s =>
             {
-                //x.For<IDatabase>().Use(new MsSqlDatabase());
-                //x.For<IConfigurationService>().Use<MomntzConfiguration>();
                 x.For<ISession>().HttpContextScoped().Use(CreateSessionFactory().OpenSession);
                 x.For<IDatabase>().Use(new MsSqlDatabase(key:"sql"));
-                //x.For<IProjectionProcessor>().Use<ProjectionProcessor>();
 
                 s.TheCallingAssembly();
                 s.WithDefaultConventions();
 
-                //s.ConnectImplementationsToTypesClosing(typeof(IFormHandler<>));
-               // s.ConnectImplementationsToTypesClosing(typeof(IQueryHandler<,>));
-
-                //x.For<IInjection>().Use(new StructureMapInjection());
             }));
-
-            //ModelBinders.Binders.Add(typeof(NewTag), new NewTagModelBinder());
-           // ModelBinders.Binders.Add(typeof(UsernameAndPassword), new UsernameAndPasswordModelBinder());
 
             ObjectFactory.AssertConfigurationIsValid();
             DependencyResolver.SetResolver(new StructureMapDependencyResolver());
@@ -70,6 +69,16 @@ namespace Billboard.UI
                         .FromConnectionStringWithKey("sql")))
                     .Mappings(m => m.FluentMappings.AddFromAssemblyOf<UserMap>())
                     .BuildSessionFactory();
+        }
+
+        /// <summary>
+        /// Registers the global filters.
+        /// </summary>
+        /// <param name="filters">The filters.</param>
+        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+        {
+            filters.Add(new HandleErrorAttribute());
+            filters.Add(new AuthorizeAttribute()); //new
         }
 
         internal class StructureMapDependencyResolver : IDependencyResolver

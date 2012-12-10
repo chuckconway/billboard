@@ -42,6 +42,9 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\Billboard\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\Dependencies\AutoMapper\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Chucksoft.Core">
       <HintPath>..\..\Dependencies\Chucksoft\Chucksoft.Core.dll</HintPath>
     </Reference>
@@ -57,10 +60,13 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\Json.Net\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Billboard\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\..\Dependencies\nHibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\Billboard\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\..\Dependencies\StructureMap\StructureMap.dll</HintPath>
@@ -92,6 +98,15 @@
       <Private>True</Private>
       <HintPath>..\Billboard\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="Twilio.Api">
+      <HintPath>..\Billboard\packages\Twilio.3.5.5\lib\3.5\Twilio.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="Twilio.Mvc">
+      <HintPath>..\Billboard\packages\Twilio.Mvc.3.1.9\lib\3.5\Twilio.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Twilio.Twiml">
+      <HintPath>..\Billboard\packages\Twilio.TwiML.3.2.0\lib\3.5\Twilio.Twiml.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\Billboard\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
     </Reference>
@@ -99,11 +114,18 @@
   <ItemGroup>
     <Compile Include="Areas\Dashboard\Controllers\IndexController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Dashboard\Models\EditEventModel.cs" />
+    <Compile Include="Areas\Dashboard\Models\DashboardModel.cs" />
+    <Compile Include="Areas\Dashboard\Models\NewEventModel.cs" />
     <Compile Include="Areas\Signup\Controllers\IndexController.cs" />
     <Compile Include="Areas\Signup\Models\SignupModel.cs" />
     <Compile Include="Areas\Signup\SignupAreaRegistration.cs" />
+    <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Controllers\BoardController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Core\AuthenticatedBaseController.cs" />
+    <Compile Include="Core\IAuthenticatedUser.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -114,9 +136,36 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\bootstrap\css\bootstrap-responsive.css" />
+    <Content Include="Content\bootstrap\css\bootstrap-responsive.min.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="Content\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\images\spinner.gif" />
     <Content Include="Global.asax" />
     <Content Include="Script\frameworks\jquery.1.8.3.min.js" />
+    <Content Include="Script\plugins\datepicker\base.css" />
+    <Content Include="Script\plugins\datepicker\base.js" />
+    <Content Include="Script\plugins\fancybox\blank.gif" />
+    <Content Include="Script\plugins\fancybox\fancybox_loading.gif" />
+    <Content Include="Script\plugins\fancybox\fancybox_overlay.png" />
+    <Content Include="Script\plugins\fancybox\fancybox_sprite.png" />
+    <Content Include="Script\plugins\fancybox\helpers\fancybox_buttons.png" />
+    <Content Include="Script\plugins\fancybox\helpers\jquery.fancybox-buttons.css" />
+    <Content Include="Script\plugins\fancybox\helpers\jquery.fancybox-buttons.js" />
+    <Content Include="Script\plugins\fancybox\helpers\jquery.fancybox-media.js" />
+    <Content Include="Script\plugins\fancybox\helpers\jquery.fancybox-thumbs.css" />
+    <Content Include="Script\plugins\fancybox\helpers\jquery.fancybox-thumbs.js" />
+    <Content Include="Script\plugins\fancybox\jquery.fancybox.css" />
+    <Content Include="Script\plugins\fancybox\jquery.fancybox.js" />
+    <Content Include="Script\plugins\fancybox\jquery.fancybox.pack.js" />
+    <Content Include="Script\plugins\timepicker\jquery.timepicker.css" />
+    <Content Include="Script\plugins\timepicker\jquery.timepicker.js" />
+    <Content Include="Script\plugins\timepicker\jquery.timepicker.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -128,7 +177,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Dashboard\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -159,6 +207,10 @@
     <Content Include="Areas\Dashboard\Views\Web.config" />
     <Content Include="Areas\Dashboard\Views\Index\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Index\Add.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Shared\_ModalLayout.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Index\Edit.cshtml" />
     <None Include="Web.DEV.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

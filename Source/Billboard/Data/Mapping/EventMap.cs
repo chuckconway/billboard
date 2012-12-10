@@ -19,7 +19,15 @@ namespace Billboard.Data.Mapping
             Map(x => x.EndTime)
                 .Not.Nullable();
 
+            Map(x => x.Message)
+                .Nullable()
+                .Length(2000);
+
             Map(x => x.Number)
+                .Nullable()
+                .Length(50);
+
+            Map(x => x.FormattedNumber)
                 .Nullable()
                 .Length(50);
 

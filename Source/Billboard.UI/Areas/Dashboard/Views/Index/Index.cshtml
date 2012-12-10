@@ -1,23 +1,63 @@
-﻿@model dynamic
+﻿@model Billboard.UI.Areas.Dashboard.Models.DashboardModel
 
 @{
     ViewBag.Title = "";
     Layout = "/Areas/Dashboard/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Events</h2>
+@section Head{
+    
+    <script src="~/Script/plugins/fancybox/jquery.fancybox.js"></script>
+    <script src="~/Script/plugins/fancybox/jquery.fancybox.pack.js"></script>
+    <link href="~/Script/plugins/fancybox/jquery.fancybox.css" rel="stylesheet" />
 
-<table>
-    <thead>
-        <tr>
-            <td>Id</td>
-            <td>Name</td>
-            <td>Number</td>
-            <td>Start Time</td>
-            <td>End Time</td>
-            <td>Timezone</td>
-            <td></td>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+    <script type="text/javascript">
+        $(function() {
+            $('.fancybox').fancybox({ height: 750, autoSize:false });
+        });
+
+    </script>
+}
+
+<h1>Events</h1>
+
+<p><a class="fancybox fancybox.iframe" href="/dashboard/index/add">Add Event</a></p>
+
+@if (Model.Events.Any())
+{
+    <table style="margin-top:35px;" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Timezone</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in Model.Events)
+            {
+                <tr>
+                    <td>@e.Id</td>
+                    <td>@e.Name</td>
+                    <td>@e.FormattedNumber</td>
+                    <td>@e.StartTime</td>
+                    <td>@e.EndTime</td>
+                    <td>@e.Timezone.Name</td>
+                    <td><a class="fancybox fancybox.iframe" href="/dashboard/index/edit?id=@e.Id" >edit</a></td>
+                    <td><i class="icon-remove" ></i></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No events found. <a class="fancybox fancybox.iframe" href="/dashboard/index/add">Add an event</a>.</p>
+}
+
+

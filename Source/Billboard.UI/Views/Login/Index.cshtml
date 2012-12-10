@@ -2,20 +2,23 @@
 
 @{
     ViewBag.Title = "title";
-    Layout = "_Layout";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Login</h2>
 
-<p>
-    <label>Username</label>
-    <input type="text" name="username" />
-</p>
+@using (Html.BeginForm())
+{
 
-<p>
-    <label>Password</label>
-    <input type="password" name="password" />
-</p>
+    <p>
+        <label>Username</label>
+        <input type="text" name="username" />
+    </p>
 
-<input type="submit" value="Login" />
+    <p>
+        <label>Password</label>
+        <input type="password" name="password" />
+    </p>
+
+    <input type="submit" value="Login" />
+}
 
