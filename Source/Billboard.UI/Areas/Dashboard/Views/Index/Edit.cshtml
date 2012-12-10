@@ -1,0 +1,89 @@
+﻿@model Billboard.Data.Model.Event
+
+@{
+    ViewBag.Title = "";
+    Layout = "/Areas/Dashboard/Views/Shared/_ModalLayout.cshtml";
+}
+
+@section Head{
+    
+    <style type="text/css" >
+        input.start{ width: 80px; }
+        input.end{ width: 80px; }
+    </style>
+
+    <script type="text/javascript" >
+        $(function () {
+            $('input#datestart').datepicker({
+                'dateFormat': 'm/d/yy',
+                'autoclose': true
+            });
+            
+            $('input#dateend').datepicker({
+                    'dateFormat': 'm/d/yy',
+                    'autoclose': true
+            });
+            
+            $('input#timestart').timepicker();
+            $('input#timeend').timepicker();
+            
+            $('a#getnumber').click(function () {
+                var spinner = $('img#spinner');
+                spinner.show();
+                $.post('/api/getnumber', function (data) {
+                    $('input#formatted').val(data.Formatted);
+                    $('input#number').val(data.Number);
+
+                    spinner.hide();
+                });
+            });
+        });
+    </script>
+
+    <script src="~/Script/plugins/datepicker/base.js"></script>
+    <link href="~/Script/plugins/datepicker/base.css" rel="stylesheet" />
+    <script src="~/Script/plugins/timepicker/jquery.timepicker.min.js"></script>
+    <link href="~/Script/plugins/timepicker/jquery.timepicker.css" rel="stylesheet" />
+}
+
+    <h2>Edit Event</h2>
+
+    @using (Html.BeginForm())
+    {
+        <input type="hidden" name="id" value="@Model.Id" />
+        
+        <p>
+            <label>Name</label>
+            <input type="text" name="name" value="@Model.Name" />
+        </p>
+
+        <p>
+            <label>Message</label>
+            <textarea name="message" >@Model.Message</textarea>
+        </p>
+        
+        <p>
+            <label>Timezone</label>
+            @Html.DropDownList("timezone")
+        </p>
+        
+        <p>
+            <label>Start</label>
+            <input type="text" id="datestart" name="datestart" value="@Model.StartTime.ToShortDateString()" class="date start" />
+            <input type="text" id="timestart" name="timestart" value="@Model.StartTime.ToShortTimeString()" class="time start" /> 
+        </p>
+        <p>
+            <label>End</label>
+            <input type="text" id="dateend" name="dateend" value="@Model.EndTime.ToShortDateString()"  class="date end" />
+            <input type="text" id="timeend" name="timeend" value="@Model.EndTime.ToShortTimeString()"  class="time end" />
+        </p>
+        
+        <p>
+            <label>Number</label>
+            <input id="formatted" readonly="readonly" type="text" name="formatted" value="@Model.FormattedNumber" /> <a id="getnumber" href="#">Get Number</a> <img id="spinner" style="display: none;"  src="/Content/images/spinner.gif" />
+            <input id="number" type="hidden" name="number" value="@Model.Number" />
+        </p>
+
+        <input type="submit" class="btn" value="Save" />
+        <input type="submit" class="btn" value="Cancel" />
+    }

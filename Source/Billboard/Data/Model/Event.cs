@@ -35,10 +35,22 @@ namespace Billboard.Data.Model
         public virtual string Number { get; set; }
 
         /// <summary>
+        /// Gets or sets the formatted number.
+        /// </summary>
+        /// <value>The formatted number.</value>
+        public virtual string FormattedNumber { get; set; }
+
+        /// <summary>
         /// Gets or sets the user id.
         /// </summary>
         /// <value>The user id.</value>
         public virtual int UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the message.
+        /// </summary>
+        /// <value>The message.</value>
+        public virtual string Message { get; set; }
 
         /// <summary>
         /// Gets or sets the price.
