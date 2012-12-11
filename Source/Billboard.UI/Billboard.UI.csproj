@@ -211,6 +211,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Shared\_ModalLayout.cshtml" />
     <Content Include="Areas\Dashboard\Views\Index\Edit.cshtml" />
+    <Content Include="Views\Shared\_Board.cshtml" />
     <None Include="Web.DEV.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

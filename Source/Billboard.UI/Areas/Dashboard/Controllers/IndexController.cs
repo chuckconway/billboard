@@ -121,6 +121,23 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
         }
 
         /// <summary>
+        /// Deletes the specified id.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>ActionResult.</returns>
+        public ActionResult Delete(int id)
+        {
+            using (var tran = _session.BeginTransaction())
+            {
+                Event evt = _session.Get<Event>(id);
+                _session.Delete(evt);
+                tran.Commit();
+            }
+
+            return Content(string.Empty);
+        }
+
+        /// <summary>
         /// Maps the specified new event.
         /// </summary>
         /// <param name="newEvent">The new event.</param>

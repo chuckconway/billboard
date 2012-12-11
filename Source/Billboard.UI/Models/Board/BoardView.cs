@@ -1,7 +1,13 @@
-﻿namespace Billboard.UI.Models.Board
+﻿using Billboard.Data.Model;
+
+namespace Billboard.UI.Models.Board
 {
     public class BoardView
     {
-        public int EventId { get; set; }
+        /// <summary>
+        /// Gets or sets the event.
+        /// </summary>
+        /// <value>The event.</value>
+        public Event Event { get; set; }
     }
 }
