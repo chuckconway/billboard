@@ -27,7 +27,18 @@ namespace Billboard.UI.Controllers
         /// <returns>ActionResult.</returns>
         public ActionResult Index(int id)
         {
-            return View(new BoardView {EventId = id});
+            Event evt;
+
+            using (var trans = _session.BeginTransaction())
+            {
+                evt = _session.QueryOver<Event>()
+                                    .Where(e => e.Id == id)
+                                    .SingleOrDefault();
+
+                trans.Commit();
+            }
+
+            return View(new BoardView { Event = evt });
         }
 
         /// <summary>
