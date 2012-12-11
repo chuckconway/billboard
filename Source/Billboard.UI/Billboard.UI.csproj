@@ -51,8 +51,9 @@
     <Reference Include="FluentNHibernate">
       <HintPath>..\..\Dependencies\nHibernate\FluentNHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="Hypersonic">
-      <HintPath>..\..\..\Momntz\Dependencies\Hypersonic\Hypersonic.dll</HintPath>
+    <Reference Include="Hypersonic, Version=3.0.0.25, Culture=neutral, PublicKeyToken=6379ba783759c281, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\Hypersonic\Hypersonic.dll</HintPath>
     </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\..\Dependencies\nHibernate\Iesi.Collections.dll</HintPath>
