@@ -1,4 +1,5 @@
-﻿@model dynamic
+﻿@using Billboard.UI.Core.HtmlHelpers
+@model Billboard.UI.Areas.Dashboard.Models.AddEventView
 
 @{
     ViewBag.Title = "";
@@ -90,4 +91,6 @@
 
         <input type="submit" class="btn" value="Save" />
         <input type="submit" id="cancel" class="btn" value="Cancel" />
+        
+        @Model.Message.Success();
     }

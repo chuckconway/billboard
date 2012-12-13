@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Billboard.Data.Model;
 
 namespace Billboard.UI.Areas.Dashboard.Models
 {
@@ -9,7 +8,7 @@ namespace Billboard.UI.Areas.Dashboard.Models
         /// Gets or sets the events.
         /// </summary>
         /// <value>The events.</value>
-        public IList<Event> Events { get; set; }
+        public IList<EventJsonView> Events { get; set; }
 
     }
 }

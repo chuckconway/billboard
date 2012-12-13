@@ -12,22 +12,26 @@ namespace Billboard.UI.Core
         /// </summary>
         /// <returns>User.</returns>
         User GetUserInfo();
+
+        /// <summary>
+        /// Sets the user info.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        void SetUserInfo(User user);
     }
 
     public class AuthenticatedUser : IAuthenticatedUser
     {
-        private HttpRequest _request;
-
         /// <summary>
         /// Gets the user.
         /// </summary>
         /// <returns>User.</returns>
         public User GetUserInfo()
         {
-            _request = HttpContext.Current.Request;
+            HttpContext context = HttpContext.Current;
 
             User user = null;
-            var cookie = _request.Cookies[FormsAuthentication.FormsCookieName];
+            var cookie = context.Request.Cookies[FormsAuthentication.FormsCookieName];
 
             if (cookie != null)
             {
@@ -41,6 +45,22 @@ namespace Billboard.UI.Core
             }
 
             return user;
+        }
+
+        /// <summary>
+        /// Sets the user info.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        public void SetUserInfo(User user)
+        {
+            HttpContext context = HttpContext.Current;
+            var cookie = context.Request.Cookies[FormsAuthentication.FormsCookieName];
+
+            if (cookie != null)
+            {
+                FormsAuthentication.SetAuthCookie(user.ToString(), false);
+            }
+
         }
     }
 }
