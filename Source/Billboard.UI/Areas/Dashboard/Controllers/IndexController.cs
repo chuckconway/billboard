@@ -154,7 +154,7 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
         private void ProcurePhoneNumber(string phoneNumber)
         {
             var twilio = new TwilioRestClient("ACfb0d36e8c09202b11963bfac14ddadda", "9be05400b471c889b4f42bbc084b74cf");
-           var number = twilio.AddIncomingPhoneNumber(new PhoneNumberOptions { PhoneNumber = phoneNumber, SmsMethod = "POST", SmsUrl = "http://3cjr.com/api/receivemessage"});
+           var number = twilio.AddIncomingPhoneNumber(new PhoneNumberOptions {PhoneNumber = phoneNumber, SmsMethod = "POST", SmsUrl = "http://3cjr.com/api/receivemessage"});
         }
 
         /// <summary>
