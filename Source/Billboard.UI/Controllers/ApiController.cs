@@ -4,6 +4,7 @@ using System.Text;
 using System.Web.Mvc;
 using Billboard.Data.Model;
 using Billboard.UI.Core;
+using Billboard.UI.Models.Api;
 using NHibernate;
 using Twilio;
 
@@ -51,20 +52,20 @@ namespace Billboard.UI.Controllers
         /// <returns>ActionResult.</returns>
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult RecieveMessage()
+        public ActionResult RecieveMessage(TwillioMessage message)
         {
-            var body = GetBytes();
-            var json = Encoding.Default.GetString(body);
+            //var body = GetBytes();
+            //var json = Encoding.Default.GetString(body);
 
-            var message = new Message();
-            message.To = "5305213453";
-            message.From = "523432324";
-            message.Body = json;
-            message.Received = DateTime.UtcNow;
+            var msg = new Message();
+            msg.To = message.To;
+            msg.From = message.From;
+            msg.Body = message.Body;
+            msg.Received = DateTime.UtcNow;
             
             using (var trans =_session.BeginTransaction())
             {
-                _session.Save(message);
+                _session.Save(msg);
                 trans.Commit();
             }
 
