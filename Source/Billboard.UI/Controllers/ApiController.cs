@@ -50,6 +50,7 @@ namespace Billboard.UI.Controllers
         /// </summary>
         /// <returns>ActionResult.</returns>
         [AcceptVerbs("POST")]
+        [AllowAnonymous]
         public ActionResult RecieveMessage()
         {
             var body = GetBytes();
