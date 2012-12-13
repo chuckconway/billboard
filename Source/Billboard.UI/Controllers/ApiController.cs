@@ -49,7 +49,7 @@ namespace Billboard.UI.Controllers
         /// Recieves the message.
         /// </summary>
         /// <returns>ActionResult.</returns>
-        [AcceptVerbs("POST")]
+        [HttpPost]
         [AllowAnonymous]
         public ActionResult RecieveMessage()
         {
