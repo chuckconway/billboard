@@ -83,6 +83,8 @@
     <Compile Include="Data\Model\Event.cs" />
     <Compile Include="Data\Model\Timezone.cs" />
     <Compile Include="Data\Model\User.cs" />
+    <Compile Include="Json\JsonResolver.cs" />
+    <Compile Include="Json\JsonSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

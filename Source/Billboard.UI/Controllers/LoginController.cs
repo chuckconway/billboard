@@ -2,6 +2,7 @@
 using System.Web.Security;
 using Billboard.Data.Model;
 using Billboard.UI.Areas.Dashboard.Controllers;
+using Billboard.UI.Core;
 using NHibernate;
 
 namespace Billboard.UI.Controllers
@@ -10,14 +11,16 @@ namespace Billboard.UI.Controllers
     public class LoginController : Controller
     {
         private readonly ISession _session;
+        private readonly IAuthenticatedUser _authenticatedUser;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IndexController" /> class.
         /// </summary>
         /// <param name="session">The session.</param>
-        public LoginController(ISession session)
+        public LoginController(ISession session, IAuthenticatedUser authenticatedUser)
         {
             _session = session;
+            _authenticatedUser = authenticatedUser;
         }
 
         /// <summary>

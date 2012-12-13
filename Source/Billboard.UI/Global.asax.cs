@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Billboard.Data.Mapping;
+using Billboard.UI.Core;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using Hypersonic;
@@ -46,11 +47,11 @@ namespace Billboard.UI
             ObjectFactory.Initialize(x => x.Scan(s =>
             {
                 x.For<ISession>().HttpContextScoped().Use(CreateSessionFactory().OpenSession);
+                x.For<ITimezoneHydration>().Use<TimezoneHydration>();
                 x.For<IDatabase>().Use(new MsSqlDatabase(key:"sql"));
 
                 s.TheCallingAssembly();
                 s.WithDefaultConventions();
-
             }));
 
             ObjectFactory.AssertConfigurationIsValid();

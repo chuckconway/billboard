@@ -1,6 +1,10 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.IO;
+using System.Text;
+using System.Web.Mvc;
 using Billboard.Data.Model;
 using Billboard.UI.Core;
+using NHibernate;
 using Twilio;
 
 namespace Billboard.UI.Controllers
@@ -8,14 +12,16 @@ namespace Billboard.UI.Controllers
     public class ApiController : Controller
     {
         private readonly IAuthenticatedUser _user;
+        private readonly ISession _session;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiController" /> class.
         /// </summary>
         /// <param name="user">The user.</param>
-        public ApiController(IAuthenticatedUser user)
+        public ApiController(IAuthenticatedUser user, ISession session)
         {
             _user = user;
+            _session = session;
         }
 
         /// <summary>
@@ -37,6 +43,44 @@ namespace Billboard.UI.Controllers
             var numbers = AvailablePhoneNumberResult();
             var number = numbers.AvailablePhoneNumbers[0];
             return Json(new { Number = number.PhoneNumber, Formatted = number.FriendlyName});
+        }
+
+        /// <summary>
+        /// Recieves the message.
+        /// </summary>
+        /// <returns>ActionResult.</returns>
+        [AcceptVerbs("POST")]
+        public ActionResult RecieveMessage()
+        {
+            var body = GetBytes();
+            var json = Encoding.Default.GetString(body);
+
+            var message = new Message();
+            message.To = "5305213453";
+            message.From = "523432324";
+            message.Body = json;
+            message.Received = DateTime.UtcNow;
+            
+            using (var trans =_session.BeginTransaction())
+            {
+                _session.Save(message);
+                trans.Commit();
+            }
+
+            return Content(string.Empty);
+        }
+
+        /// <summary> Gets the body. </summary>
+        /// <returns> The body. </returns>
+        protected byte[] GetBytes()
+        {
+            byte[] bytes;
+            using (var binaryReader = new BinaryReader(Request.InputStream))
+            {
+                bytes = binaryReader.ReadBytes(Request.ContentLength);
+            }
+
+            return bytes;
         }
 
         /// <summary>

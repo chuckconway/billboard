@@ -10,30 +10,88 @@
     <script src="~/Script/plugins/fancybox/jquery.fancybox.js"></script>
     <script src="~/Script/plugins/fancybox/jquery.fancybox.pack.js"></script>
     <link href="~/Script/plugins/fancybox/jquery.fancybox.css" rel="stylesheet" />
+    <script src="/Script/plugins/zebradialog/javascript/zebra_dialog.js"></script>
+    <link href="/Script/plugins/zebradialog/css/zebra_dialog.css" rel="stylesheet" />
 
     <script type="text/javascript">
-        $(function() {
-            $('.fancybox').fancybox({ height: 750, autoSize:false });
+        $(function () {
+
+            registerDeleteButton();
+
+            $('.fancybox').fancybox({
+                height: 750,
+                autoSize: false,
+                afterClose: refreshEvents,
+            });
         });
+
+        function registerDeleteButton() {
+            $('table tr td a.delete').click(function () {
+                var id = $(this).attr('id');
+                $.Zebra_Dialog('Once deleted, it can not be undeleted.', {
+                    'type': 'warning',
+                    'title': 'Are you sure?',
+                    'buttons': [
+                                    {
+                                        caption: 'Delete', callback: function () {
+                                            $.post('/dashboard/index/delete?id=' + id);
+                                            refreshEvents();
+                                        }
+                                    },
+                                    { caption: 'Cancel', callback: function () { } }
+                    ]
+                });
+            });
+        }
+
+        function refreshEvents() {
+            $.ajax({
+                url: '/dashboard/index/events',
+                        
+            }).done(function(data) {
+                $('table#events tbody tr').remove();
+
+                var json = data;
+                var tbody = $('table#events tbody');
+
+                $.each(json, function() {
+                    var item = this;
+                    tbody.append(
+                        $('<tr>')
+                            .append(
+                                '<td>' + item.Name + '</td>' +
+                                    '<td>' + item.FormattedNumber + '</td>' +
+                                    '<td>' + item.StartDate + ' <strong>at</strong> ' + item.StartTime + '</td>' +
+                                    '<td>' + item.EndDate + ' <strong>at</strong> ' + item.EndTime + '</td>' +
+                                    '<td>' + item.TimezoneName + '</td>' +
+                                    '<td><a href="/board/index/edit?id=' + item.Id +'" >View</a></td>'+
+                                    '<td></td>' +
+                                    '<td><a class="fancybox fancybox.iframe" href="/dashboard/index/edit?id=' + item.Id +'" >edit</a></td>' +
+                                    '<td><a id="' + item.Id + '" class="icon-remove delete" ></a></td>'
+                            ));
+                });
+                
+                registerDeleteButton();
+            });
+        }
 
     </script>
 }
 
-<h1>Events</h1>
-
-<p><a class="fancybox fancybox.iframe" href="/dashboard/index/add">Add Event</a></p>
+<h2>Events <span style="font-size: 20px;" >(<a class="fancybox fancybox.iframe" href="/dashboard/index/add">Add</a>)</span></h2>
 
 @if (Model.Events.Any())
 {
-    <table style="margin-top:35px;" class="table table-striped">
+    <table id="events" style="margin-top:35px;" class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Number</th>
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Timezone</th>
+                <th>Transcript</th>
+                <th>Board</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -42,14 +100,15 @@
             @foreach (var e in Model.Events)
             {
                 <tr>
-                    <td>@e.Id</td>
                     <td>@e.Name</td>
                     <td>@e.FormattedNumber</td>
-                    <td>@e.StartTime</td>
-                    <td>@e.EndTime</td>
-                    <td>@e.Timezone.Name</td>
+                    <td>@e.StartDate <strong>at</strong> @e.StartTime</td>
+                    <td>@e.EndDate <strong>at</strong> @e.EndTime</td>
+                    <td>@e.TimezoneName</td>
+                    <td></td>
+                    <td><a href="/board/index?id=@e.Id">View</a></td>
                     <td><a class="fancybox fancybox.iframe" href="/dashboard/index/edit?id=@e.Id" >edit</a></td>
-                    <td><i class="icon-remove" ></i></td>
+                    <td><a id="@e.Id" class="icon-remove delete" ></a></td>
                 </tr>
             }
         </tbody>

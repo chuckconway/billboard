@@ -1,0 +1,41 @@
+﻿@using Billboard.UI.Core.HtmlHelpers
+@model Billboard.UI.Areas.Dashboard.Models.SettingsView
+
+@{
+    ViewBag.Title = "title";
+    Layout = "/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <h2>Settings</h2>
+    
+    <p>
+        <label>Email</label>
+        <input type="text" name="email" value="@Model.User.Email" />
+    </p>
+
+    <p>
+        <label>Password</label>
+        <input type="password" name="password" value="@Model.User.Password"  />
+    </p>
+
+    <p>
+        <label>Confirm</label>
+        <input type="password" name="confirm" value="@Model.User.Password"  />
+    </p>
+
+    <p>
+        <label>Display Name</label>
+        <input type="text" name="displayname" value="@Model.User.DisplayName"   />
+    </p>
+
+    <p>
+        <label>Default Timezone</label>
+        @Html.DropDownList("timezone")
+    </p>
+
+    <input type="submit" class="btn" name="Save" value="Save" />
+    
+    @Model.Message.Success();
+}
