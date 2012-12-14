@@ -48,6 +48,9 @@
     <Reference Include="Chucksoft.Core">
       <HintPath>..\..\Dependencies\Chucksoft\Chucksoft.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Elmah">
+      <HintPath>..\Billboard\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
     <Reference Include="FluentNHibernate">
       <HintPath>..\..\Dependencies\nHibernate\FluentNHibernate.dll</HintPath>
     </Reference>
@@ -141,6 +144,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\bootstrap\css\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap\css\bootstrap.css" />
