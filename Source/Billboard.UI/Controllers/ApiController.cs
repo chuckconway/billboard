@@ -50,7 +50,7 @@ namespace Billboard.UI.Controllers
         /// <returns>ActionResult.</returns>
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult RecieveMessage(TwillioMessage message)
+        public ActionResult ReceiveMessage(TwillioMessage message)
         {
            var msg = AutoMapper.Mapper.DynamicMap<Message>(message);
            msg.Received = DateTime.UtcNow;

@@ -148,16 +148,9 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
             }
 
             ViewData["timezone"] = _timezoneHydration.GetAndSetSelectedTimezone();
-            return View(addEvent);
-        }
+            addEvent.Message = string.Format("New event created. Phone number: {0}", evt.FormattedNumber);
 
-        /// <summary>
-        /// Procures the phone number.
-        /// </summary>
-        /// <param name="phoneNumber">The phone number.</param>
-        private string ProcurePhoneNumber(string phoneNumber)
-        {
-           return _service.ProcureNumber(phoneNumber);
+            return View(addEvent);
         }
 
         /// <summary>
