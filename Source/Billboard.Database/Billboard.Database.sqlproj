@@ -68,4 +68,7 @@
     <Build Include="Security\RoleMemberships.sql" />
     <Build Include="dbo\Stored Procedures\Message_GetMessageByEventId.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Post_Deploy.sql" />
+  </ItemGroup>
 </Project>
