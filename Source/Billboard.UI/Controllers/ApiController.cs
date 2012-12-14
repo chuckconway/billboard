@@ -48,7 +48,7 @@ namespace Billboard.UI.Controllers
         /// Recieves the message.
         /// </summary>
         /// <returns>ActionResult.</returns>
-        [HttpPost]
+        //[HttpPost]
         [AllowAnonymous]
         public ActionResult ReceiveMessage(TwillioMessage message)
         {
