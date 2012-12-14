@@ -35,7 +35,7 @@ namespace Billboard.Services.Twillio
         /// <param name="phoneNumber">The phone number.</param>
         public string ProcureNumber(string phoneNumber)
         {
-           var number = _twilio.AddIncomingPhoneNumber(new PhoneNumberOptions { PhoneNumber = phoneNumber, SmsMethod = "POST", SmsUrl = "http://3cjr.com/api/receivemessage" });
+           var number = _twilio.AddIncomingPhoneNumber(new PhoneNumberOptions { PhoneNumber = phoneNumber, SmsMethod = "POST", SmsUrl = "http://dj.3cjr.com/api/receivemessage" });
             return number.Sid;
         }
     
