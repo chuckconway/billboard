@@ -7,7 +7,7 @@ div.messages { width: 90%;margin-left: auto;margin-right: auto; }
 div.messages h1 { margin-bottom: 0;}
 div.messages h1, div.messages h2 { text-align: center;}
 div.messages h2 { text-align: center;margin: 0;padding: 0; }
-div.message h2 {margin: 0;padding: 0; font-size: 18px;font-weight: bold;color: #999;text-align: center;}
+div.message h2 {margin: 0;padding: 0; font-size: 18px;font-weight: bold;color: #999;text-align: left;}
 div.message p {margin: 0;padding: 0; font-size: 30px;}
 
 div.message { margin-bottom: 25px;}

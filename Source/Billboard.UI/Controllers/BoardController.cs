@@ -1,8 +1,7 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Billboard.Data.Model;
+using Billboard.UI.Core.Services;
 using Billboard.UI.Models.Board;
-using Hypersonic;
 using Newtonsoft.Json;
 using ISession = NHibernate.ISession;
 
@@ -11,12 +10,17 @@ namespace Billboard.UI.Controllers
     public class BoardController : Controller
     {
         private readonly ISession _session;
-        private readonly IDatabase _database;
+        private readonly IMessageService _messageService;
 
-        public BoardController(ISession session, IDatabase database)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BoardController" /> class.
+        /// </summary>
+        /// <param name="session">The session.</param>
+        /// <param name="messageService">The message service.</param>
+        public BoardController(ISession session, IMessageService messageService)
         {
             _session = session;
-            _database = database;
+            _messageService = messageService;
         }
 
 
@@ -59,10 +63,7 @@ namespace Billboard.UI.Controllers
                 trans.Commit();
             }
 
-            DateTime now = DateTime.UtcNow.AddHours(evt.Timezone.OffsetHour);
-            now = now.AddMinutes(evt.Timezone.OffsetMinutes);
-
-            var items =_database.List<Message, object>("[dbo].[Message_GetMessageByEventId]", new {eventId = id, now});
+            var items = _messageService.GetMessages(evt);
 
             string json = JsonConvert.SerializeObject(items);
             return Content(json, "application/json; charset=utf-8");

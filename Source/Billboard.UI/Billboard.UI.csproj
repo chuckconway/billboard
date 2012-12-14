@@ -125,12 +125,15 @@
     <Compile Include="Core\AuthenticatedBaseController.cs" />
     <Compile Include="Core\HtmlHelpers\MessageHtmlHelperExtensions.cs" />
     <Compile Include="Core\IAuthenticatedUser.cs" />
+    <Compile Include="Core\Services\IMessageService.cs" />
+    <Compile Include="Core\Services\MessageService.cs" />
     <Compile Include="Core\TimezoneHydration.cs" />
     <Compile Include="Core\ITimezoneHydration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Api\TwillioMessage.cs" />
+    <Compile Include="Models\Board\BoardMessage.cs" />
     <Compile Include="Models\Board\BoardView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

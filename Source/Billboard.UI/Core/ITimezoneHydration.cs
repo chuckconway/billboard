@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using Billboard.Data.Model;
 
 namespace Billboard.UI.Core
@@ -11,5 +12,11 @@ namespace Billboard.UI.Core
         /// <param name="selectedTimezone">The selected timezone.</param>
         /// <returns>SelectList.</returns>
         SelectList GetAndSetSelectedTimezone(Timezone selectedTimezone = null);
+
+        /// <summary>
+        /// Gets the timezones.
+        /// </summary>
+        /// <returns>IEnumerable{Timezone}.</returns>
+        IEnumerable<Timezone> GetTimezones();
     }
 }

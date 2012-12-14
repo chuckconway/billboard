@@ -75,13 +75,13 @@
         
         <p>
             <label>Start</label>
-            <input type="text" id="datestart" name="datestart" value="@Model.Event.StartTime.ToShortDateString()" class="date start" />
-            <input type="text" id="timestart" name="timestart" value="@Model.Event.StartTime.ToShortTimeString()" class="time start" /> 
+            <input type="text" id="datestart" name="datestart" value="@Model.Event.StartDate" class="date start" />
+            <input type="text" id="timestart" name="timestart" value="@Model.Event.StartTime" class="time start" /> 
         </p>
         <p>
             <label>End</label>
-            <input type="text" id="dateend" name="dateend" value="@Model.Event.EndTime.ToShortDateString()"  class="date end" />
-            <input type="text" id="timeend" name="timeend" value="@Model.Event.EndTime.ToShortTimeString()"  class="time end" />
+            <input type="text" id="dateend" name="dateend" value="@Model.Event.EndDate"  class="date end" />
+            <input type="text" id="timeend" name="timeend" value="@Model.Event.EndTime"  class="time end" />
         </p>
         
         <p>

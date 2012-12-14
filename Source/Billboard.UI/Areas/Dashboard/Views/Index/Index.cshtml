@@ -63,7 +63,6 @@
                                     '<td>' + item.FormattedNumber + '</td>' +
                                     '<td>' + item.StartDate + ' <strong>at</strong> ' + item.StartTime + '</td>' +
                                     '<td>' + item.EndDate + ' <strong>at</strong> ' + item.EndTime + '</td>' +
-                                    '<td>' + item.TimezoneName + '</td>' +
                                     '<td></td>' +
                                     '<td><a href="/board/index?id=' + item.Id +'">View</a></td>' +
                                     '<td><a class="fancybox fancybox.iframe" href="/dashboard/index/edit?id=' + item.Id +'" >edit</a></td>' +
@@ -89,8 +88,7 @@
                 <th>Number</th>
                 <th>Start Time</th>
                 <th>End Time</th>
-                <th>Timezone</th>
-                <th>Transcript</th>
+                <th>Messages</th>
                 <th>Board</th>
                 <th></th>
                 <th></th>
@@ -104,8 +102,7 @@
                     <td>@e.FormattedNumber</td>
                     <td>@e.StartDate <strong>at</strong> @e.StartTime</td>
                     <td>@e.EndDate <strong>at</strong> @e.EndTime</td>
-                    <td>@e.TimezoneName</td>
-                    <td></td>
+                    <td>0</td>
                     <td><a href="/board/index?id=@e.Id">View</a></td>
                     <td><a class="fancybox fancybox.iframe" href="/dashboard/index/edit?id=@e.Id" >edit</a></td>
                     <td><a id="@e.Id" class="icon-remove delete" ></a></td>

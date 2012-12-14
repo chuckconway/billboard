@@ -66,26 +66,35 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
         private List<EventJsonView> GetEvents()
         {
            var evt = GetAllEventsForUser();
-
-            var items = evt.ConvertAll(
-                a => new EventJsonView
-                         {
-                             Id = a.Id,
-                             EndTime =  a.EndTime.ToShortTimeString(),
-                             EndDate = a.EndTime.ToShortDateString(),
-                             FormattedNumber = a.FormattedNumber,
-                             Message = a.Message,
-                             Name = a.Name,
-                             Number = a.Number,
-                             Price = a.Price,
-                             StartTime = a.StartTime.ToShortTimeString(),
-                             StartDate = a.StartTime.ToShortDateString(),
-                             TimezoneName = a.Timezone.Name,
-                             UserId = a.UserId
-                         }
-                );
-
+            var items = evt.ConvertAll(ConvertToEventJsonView);
             return items;
+        }
+
+        /// <summary>
+        /// Converts to event json view.
+        /// </summary>
+        /// <param name="a">A.</param>
+        /// <returns>EventJsonView.</returns>
+        private EventJsonView ConvertToEventJsonView(Event a)
+        {
+            var start = ConvertToLocal(a.StartTime, a.Timezone.Id);
+            var end = ConvertToLocal(a.EndTime, a.Timezone.Id);
+
+            return new EventJsonView
+                       {
+                           Id = a.Id,
+                           EndTime = end.ToShortTimeString(),
+                           EndDate = end.ToShortDateString(),
+                           FormattedNumber = a.FormattedNumber,
+                           Message = a.Message,
+                           Name = a.Name,
+                           Number = a.Number,
+                           Price = a.Price,
+                           StartTime = start.ToShortTimeString(),
+                           StartDate = start.ToShortDateString(),
+                           TimezoneName = a.Timezone.Name,
+                           UserId = a.UserId
+                       };
         }
 
         /// <summary>
@@ -140,7 +149,6 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
 
             evt.NumberSid = _service.ProcureNumber(evt.Number);
 
-
             using (var tran = _session.BeginTransaction())
             {
                 _session.Save(evt);
@@ -161,17 +169,14 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
         public ActionResult Edit(int? id)
         {
             var editEvent = new EditEventView();
-
-            Event evt;
-            using (var tran = _session.BeginTransaction())
+            if (id != null)
             {
-                evt = _session.Get<Event>(id);
-                tran.Commit();
-            }
+                var evt = GetEvent(id.Value);
 
-            var selectedList = _timezoneHydration.GetAndSetSelectedTimezone(evt.Timezone);
-            ViewData["timezone"] = selectedList;
-            editEvent.Event = evt;
+                var selectedList = _timezoneHydration.GetAndSetSelectedTimezone(evt.Timezone);
+                ViewData["timezone"] = selectedList;
+                editEvent.Event = ConvertToEventJsonView(evt); 
+            }
 
             return View(editEvent);
         }
@@ -184,40 +189,53 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
         [HttpPost]
         public ActionResult Edit(EditEventModel editModel)
         {
+            var oldEvent = GetEvent(editModel.Id);
             var editEvent = new EditEventView();
+            var evt = MapEditEventModel(oldEvent,editModel);
 
-            var user = _authenticatedUser.GetUserInfo();
-            var evt = MapEditEventModel(editModel);
-            evt.UserId = user.Id;
-
-            evt.NumberSid = _service.ProcureNumber(evt.Number);
-            
-            ReleaseOldNumber(editModel);
-            
-            using (var tran = _session.BeginTransaction())
+            if (oldEvent.Number != editModel.Number)
             {
-                var oldEvent = _session.Get<Event>(editModel.Id);
-                _service.ReleaseNumber(oldEvent.NumberSid);
+                evt.NumberSid = _service.ProcureNumber(evt.Number);
+                ReleaseOldNumber(editModel);
+            }
 
+            using (var trans =_session.BeginTransaction())
+            {
                 _session.Update(evt);
-                tran.Commit();
+                trans.Commit();
             }
 
             ViewData["timezone"] = _timezoneHydration.GetAndSetSelectedTimezone(evt.Timezone);
             editEvent.Message = "The event has been updated.";
-            editEvent.Event = evt;
+            editEvent.Event = ConvertToEventJsonView(evt);
 
             return View(editEvent);
         }
 
+        /// <summary>
+        /// Releases the old number.
+        /// </summary>
+        /// <param name="editModel">The edit model.</param>
         private void ReleaseOldNumber(EditEventModel editModel)
+        {
+            var e = GetEvent(editModel.Id);
+            _service.ReleaseNumber(e.NumberSid);
+        }
+
+        /// <summary>
+        /// Gets the event.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>Event.</returns>
+        private Event GetEvent(int id)
         {
             using (var tran = _session.BeginTransaction())
             {
-                var oldEvent = _session.Get<Event>(editModel.Id);
-
+                var oldEvent = _session.Get<Event>(id);
                 tran.Commit();
-                _service.ReleaseNumber(oldEvent.NumberSid);
+                _session.Flush();
+
+                return oldEvent;
             }
         }
 
@@ -228,14 +246,36 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
         /// <returns>ActionResult.</returns>
         public ActionResult Delete(int id)
         {
-            using (var tran = _session.BeginTransaction())
-            {
-                var evt = _session.Get<Event>(id);
-                _session.Delete(evt);
-                tran.Commit();
-            }
+            var e = GetEvent(id);
+            _service.ReleaseNumber(e.NumberSid);
 
             return Content(string.Empty);
+        }
+
+        /// <summary>
+        /// Converts to UTC.
+        /// </summary>
+        /// <param name="localtime">The localtime.</param>
+        /// <param name="timezone">The timezone.</param>
+        /// <returns>DateTime.</returns>
+        private DateTime ConvertToUtc(DateTime localtime, int timezone)
+        {
+           var tz = _timezoneHydration.GetTimezones().Single(t => t.Id == timezone);
+            var offset = new DateTimeOffset(localtime, new TimeSpan(tz.OffsetHour, tz.OffsetMinutes, 0));
+
+            return offset.UtcDateTime;
+        }
+
+        /// <summary>
+        /// Converts to local.
+        /// </summary>
+        /// <param name="utcTime">The UTC time.</param>
+        /// <param name="timezone">The timezone.</param>
+        /// <returns>DateTime.</returns>
+        private DateTime ConvertToLocal(DateTime utcTime, int timezone)
+        {
+            var tz = _timezoneHydration.GetTimezones().Single(t => t.Id == timezone);
+            return utcTime.AddHours(tz.OffsetHour).AddMinutes(tz.OffsetMinutes);
         }
 
         /// <summary>
@@ -245,14 +285,16 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
         /// <returns>Event.</returns>
         private Event MapCreateEventModel(NewEventModel newEvent)
         {
+            Func<string, string, int, DateTime> toUtc = (d, t, i) => ConvertToUtc(DateTime.Parse(d + " " + t), i);
+
             var evt = new Event
                             {
                                 Name = newEvent.Name,
                                 FormattedNumber = newEvent.Formatted,
                                 Message = newEvent.Message,
-                                EndTime = DateTime.Parse(newEvent.DateEnd + " " + newEvent.TimeEnd),
+                                EndTime = toUtc(newEvent.DateEnd, newEvent.TimeEnd, newEvent.Timezone),
                                 Number = newEvent.Number,
-                                StartTime = DateTime.Parse(newEvent.DateStart + " " + newEvent.TimeStart),
+                                StartTime = toUtc(newEvent.DateStart, newEvent.TimeStart, newEvent.Timezone),
                                 Timezone = new Timezone {Id = newEvent.Timezone}
                             };
             return evt;
@@ -263,21 +305,19 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
         /// </summary>
         /// <param name="edit">The edit.</param>
         /// <returns>Event.</returns>
-        private Event MapEditEventModel(EditEventModel edit)
+        private Event MapEditEventModel(Event e, EditEventModel edit)
         {
-            var evt = new Event
-            {
-                Id = edit.Id,
-                FormattedNumber = edit.Formatted,
-                Name = edit.Name,
-                Message = edit.Message,
-                StartTime = DateTime.Parse(edit.DateStart + " " + edit.TimeStart),
-                Number = edit.Number,
-                EndTime = DateTime.Parse(edit.DateEnd + " " + edit.TimeEnd),
-                Timezone = new Timezone { Id = edit.Timezone }
-            };
+            Func<string, string, int, DateTime> toUtc = (d, t, i) => ConvertToUtc(DateTime.Parse(d + " " + t), i);
 
-            return evt;
+            e.FormattedNumber = edit.Formatted;
+            e.Name = edit.Name;
+            e.Message = edit.Message;
+            e.StartTime = toUtc(edit.DateStart, edit.TimeStart, edit.Timezone);
+            e.Number = edit.Number;
+            e.EndTime = toUtc(edit.DateEnd, edit.TimeEnd, edit.Timezone);
+            e.Timezone = new Timezone {Id = edit.Timezone};
+
+            return e;
         }
         
     }

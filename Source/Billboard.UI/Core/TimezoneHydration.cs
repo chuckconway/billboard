@@ -38,7 +38,7 @@ namespace Billboard.UI.Core
         /// Gets the timezones.
         /// </summary>
         /// <returns>IList{Timezone}.</returns>
-        private IEnumerable<Timezone> GetTimezones()
+        public IEnumerable<Timezone> GetTimezones()
         {
             IList<Timezone> zones;
 
