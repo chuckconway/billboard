@@ -1,28 +1,26 @@
-using System;
-using System.IO;
-using System.Text;
+﻿using System;
 using System.Web.Mvc;
 using Billboard.Data.Model;
-using Billboard.UI.Core;
+using Billboard.Services.Twillio;
 using Billboard.UI.Models.Api;
 using NHibernate;
-using Twilio;
 
 namespace Billboard.UI.Controllers
 {
     public class ApiController : Controller
     {
-        private readonly IAuthenticatedUser _user;
         private readonly ISession _session;
+        private readonly ITwillioService _service;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiController" /> class.
         /// </summary>
-        /// <param name="user">The user.</param>
-        public ApiController(IAuthenticatedUser user, ISession session)
+        /// <param name="session">The session.</param>
+        /// <param name="service"></param>
+        public ApiController(ISession session, ITwillioService service)
         {
-            _user = user;
             _session = session;
+            _service = service;
         }
 
         /// <summary>
@@ -31,8 +29,8 @@ namespace Billboard.UI.Controllers
         /// <returns>ActionResult.</returns>
         public ActionResult GetAvailableNumbersNumbers()
         {
-            var numbers = AvailablePhoneNumberResult();
-            return Json(numbers.AvailablePhoneNumbers, "application/json");
+            var numbers = _service.AvailablePhoneNumberResult();
+            return Json(numbers, "application/json");
         }
 
         /// <summary>
@@ -41,9 +39,9 @@ namespace Billboard.UI.Controllers
         /// <returns>ActionResult.</returns>
         public ActionResult GetNumber()
         {
-            var numbers = AvailablePhoneNumberResult();
-            var number = numbers.AvailablePhoneNumbers[0];
-            return Json(new { Number = number.PhoneNumber, Formatted = number.FriendlyName});
+            var numbers = _service.AvailablePhoneNumberResult();
+            var number = numbers[0];
+            return Json(new {number.Number, Formatted = number.FormattedNumber});
         }
 
         /// <summary>
@@ -54,12 +52,8 @@ namespace Billboard.UI.Controllers
         [AllowAnonymous]
         public ActionResult RecieveMessage(TwillioMessage message)
         {
-
-            var msg = new Message();
-            msg.To = message.To;
-            msg.From = message.From;
-            msg.Body = message.Body;
-            msg.Received = DateTime.UtcNow;
+           var msg = AutoMapper.Mapper.DynamicMap<Message>(message);
+           msg.Received = DateTime.UtcNow;
             
             using (var trans =_session.BeginTransaction())
             {
@@ -68,20 +62,6 @@ namespace Billboard.UI.Controllers
             }
 
             return Content(string.Empty);
-        }
-
-        /// <summary>
-        /// Availables the phone number result.
-        /// </summary>
-        /// <returns>AvailablePhoneNumberResult.</returns>
-        public AvailablePhoneNumberResult AvailablePhoneNumberResult()
-        {
-            var twilio = new TwilioRestClient("ACfb0d36e8c09202b11963bfac14ddadda", "9be05400b471c889b4f42bbc084b74cf");
-
-            var searchParms = new AvailablePhoneNumberListRequest();
-
-            var numbers = twilio.ListAvailableLocalPhoneNumbers("US", searchParms);
-            return numbers;
         }
     }
 }

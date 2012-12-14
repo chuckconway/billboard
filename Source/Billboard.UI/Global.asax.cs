@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Billboard.Data.Mapping;
+using Billboard.Services.Twillio;
 using Billboard.UI.Core;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
@@ -48,6 +49,7 @@ namespace Billboard.UI
             {
                 x.For<ISession>().HttpContextScoped().Use(CreateSessionFactory().OpenSession);
                 x.For<ITimezoneHydration>().Use<TimezoneHydration>();
+                x.For<ITwillioService>().Use<TwillioService>();
                 x.For<IDatabase>().Use(new MsSqlDatabase(key:"sql"));
 
                 s.TheCallingAssembly();

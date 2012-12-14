@@ -23,6 +23,46 @@ namespace Billboard.Data.Mapping
 
             Map(x => x.Received)
                 .Nullable();
+
+            Map(x => x.AccountSid)
+                .Nullable()
+                .Length(50);
+
+            Map(x => x.ToCity)
+                .Nullable()
+                .Length(50);
+
+            Map(x => x.SmsSid)
+                .Nullable()
+                .Length(50);
+
+            Map(x => x.FromCountry)
+                .Nullable()
+                .Length(50);
+
+            Map(x => x.ToCountry)
+                .Nullable()
+                .Length(50);
+
+            Map(x => x.SmsMessageSid)
+                .Nullable()
+                .Length(50);
+
+            Map(x => x.ApiVersion)
+                .Nullable()
+                .Length(50);
+
+            Map(x => x.FromState)
+                .Nullable()
+                .Length(50);
+
+            Map(x => x.ToZip)
+                .Nullable()
+                .Length(50);
+
+            Map(x => x.ToState)
+                .Nullable()
+                .Length(50);
         }
     }
 }
