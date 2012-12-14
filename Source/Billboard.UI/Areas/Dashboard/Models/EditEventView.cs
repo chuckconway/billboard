@@ -1,6 +1,4 @@
-﻿using Billboard.Data.Model;
-
-namespace Billboard.UI.Areas.Dashboard.Models
+﻿namespace Billboard.UI.Areas.Dashboard.Models
 {
     public class EditEventView
     {
@@ -8,7 +6,7 @@ namespace Billboard.UI.Areas.Dashboard.Models
         /// Gets or sets the event.
         /// </summary>
         /// <value>The event.</value>
-        public Event Event { get; set; }
+        public EventJsonView Event { get; set; }
 
         /// <summary>
         /// Gets or sets the message.

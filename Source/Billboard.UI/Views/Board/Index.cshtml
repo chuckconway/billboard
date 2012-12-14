@@ -24,7 +24,7 @@
 
             if (messages.length > 0) {
                 var message = messages.shift();
-                var element = $('<div>').attr('class','message').html('<h2>' + message.From + ' - ' + message.Received +'</h2><p>' + message.Body + '</p>');
+                var element = $('<div>').attr('class','message').html('<h2>' + message.From + ' - ' + message.Time +'</h2><p>' + message.Message + '</p>');
                 $('div.messages').append(element);
                 //alert(messages.length);
             }

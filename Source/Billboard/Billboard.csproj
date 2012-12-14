@@ -85,9 +85,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Mapping\AliasMapping.cs" />
     <Compile Include="Data\Mapping\EventMap.cs" />
     <Compile Include="Data\Mapping\MessageMap.cs" />
     <Compile Include="Data\Mapping\TimezoneMap.cs" />
+    <Compile Include="Data\Model\Alias.cs" />
     <Compile Include="Data\Model\Message.cs" />
     <Compile Include="Data\Mapping\UserMap.cs" />
     <Compile Include="Data\Model\Event.cs" />
