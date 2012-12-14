@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text;
 using System.Web.Mvc;
@@ -54,8 +54,6 @@ namespace Billboard.UI.Controllers
         [AllowAnonymous]
         public ActionResult RecieveMessage(TwillioMessage message)
         {
-            //var body = GetBytes();
-            //var json = Encoding.Default.GetString(body);
 
             var msg = new Message();
             msg.To = message.To;
@@ -72,30 +70,15 @@ namespace Billboard.UI.Controllers
             return Content(string.Empty);
         }
 
-        /// <summary> Gets the body. </summary>
-        /// <returns> The body. </returns>
-        protected byte[] GetBytes()
-        {
-            byte[] bytes;
-            using (var binaryReader = new BinaryReader(Request.InputStream))
-            {
-                bytes = binaryReader.ReadBytes(Request.ContentLength);
-            }
-
-            return bytes;
-        }
-
         /// <summary>
         /// Availables the phone number result.
         /// </summary>
         /// <returns>AvailablePhoneNumberResult.</returns>
         public AvailablePhoneNumberResult AvailablePhoneNumberResult()
         {
-            User user = _user.GetUserInfo();
             var twilio = new TwilioRestClient("ACfb0d36e8c09202b11963bfac14ddadda", "9be05400b471c889b4f42bbc084b74cf");
 
             var searchParms = new AvailablePhoneNumberListRequest();
-            //searchParms.AreaCode = "907";
 
             var numbers = twilio.ListAvailableLocalPhoneNumbers("US", searchParms);
             return numbers;
