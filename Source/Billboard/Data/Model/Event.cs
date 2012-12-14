@@ -17,6 +17,12 @@ namespace Billboard.Data.Model
         public virtual string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the number id.
+        /// </summary>
+        /// <value>The number id.</value>
+        public virtual string NumberSid { get; set; }
+
+        /// <summary>
         /// Gets or sets the start time.
         /// </summary>
         /// <value>The start time.</value>

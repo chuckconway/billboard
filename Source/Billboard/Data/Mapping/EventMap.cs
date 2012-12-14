@@ -37,6 +37,9 @@ namespace Billboard.Data.Mapping
             Map(x => x.Price)
                 .Nullable();
 
+            Map(x => x.NumberSid)
+            .Nullable();
+
             References(m => m.Timezone, "TimezoneId");
         }
     }

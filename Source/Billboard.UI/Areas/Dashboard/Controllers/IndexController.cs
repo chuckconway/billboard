@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 
 using System.Collections.Generic;
@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 using Billboard.Data.Model;
 using Billboard.Json;
+using Billboard.Services.Twillio;
 using Billboard.UI.Areas.Dashboard.Models;
 using Billboard.UI.Core;
 using NHibernate;
@@ -19,6 +20,7 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
         private readonly ISession _session;
         private readonly IAuthenticatedUser _authenticatedUser;
         private readonly ITimezoneHydration _timezoneHydration;
+        private readonly ITwillioService _service;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IndexController" /> class.
@@ -26,11 +28,13 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
         /// <param name="session">The session.</param>
         /// <param name="authenticatedUser">The authenticated user.</param>
         /// <param name="timezoneHydration">The timezone hydration.</param>
-        public IndexController(ISession session, IAuthenticatedUser authenticatedUser, ITimezoneHydration timezoneHydration)
+        /// <param name="service"></param>
+        public IndexController(ISession session, IAuthenticatedUser authenticatedUser, ITimezoneHydration timezoneHydration, ITwillioService service)
         {
             _session = session;
             _authenticatedUser = authenticatedUser;
             _timezoneHydration = timezoneHydration;
+            _service = service;
         }
 
         /// <summary>
@@ -134,7 +138,7 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
             var evt = MapCreateEventModel(newEvent);
             evt.UserId = user.Id;
 
-            ProcurePhoneNumber(evt.Number);
+            evt.NumberSid = _service.ProcureNumber(evt.Number);
 
 
             using (var tran = _session.BeginTransaction())
@@ -151,10 +155,9 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
         /// Procures the phone number.
         /// </summary>
         /// <param name="phoneNumber">The phone number.</param>
-        private void ProcurePhoneNumber(string phoneNumber)
+        private string ProcurePhoneNumber(string phoneNumber)
         {
-            var twilio = new TwilioRestClient("ACfb0d36e8c09202b11963bfac14ddadda", "9be05400b471c889b4f42bbc084b74cf");
-           var number = twilio.AddIncomingPhoneNumber(new PhoneNumberOptions {PhoneNumber = phoneNumber, SmsMethod = "POST", SmsUrl = "http://3cjr.com/api/receivemessage"});
+           return _service.ProcureNumber(phoneNumber);
         }
 
         /// <summary>
@@ -194,8 +197,15 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
             var evt = MapEditEventModel(editModel);
             evt.UserId = user.Id;
 
+            evt.NumberSid = _service.ProcureNumber(evt.Number);
+            
+            ReleaseOldNumber(editModel);
+            
             using (var tran = _session.BeginTransaction())
             {
+                var oldEvent = _session.Get<Event>(editModel.Id);
+                _service.ReleaseNumber(oldEvent.NumberSid);
+
                 _session.Update(evt);
                 tran.Commit();
             }
@@ -205,6 +215,17 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
             editEvent.Event = evt;
 
             return View(editEvent);
+        }
+
+        private void ReleaseOldNumber(EditEventModel editModel)
+        {
+            using (var tran = _session.BeginTransaction())
+            {
+                var oldEvent = _session.Get<Event>(editModel.Id);
+
+                tran.Commit();
+                _service.ReleaseNumber(oldEvent.NumberSid);
+            }
         }
 
         /// <summary>
