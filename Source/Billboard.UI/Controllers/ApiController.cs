@@ -61,7 +61,12 @@ namespace Billboard.UI.Controllers
                 trans.Commit();
             }
 
-            return Content(string.Empty);
+            string xml = "<?xml version=\"1.0\"" +
+            " encoding=\"UTF-8\" ?>" +
+            "<Response>" +
+            "</Response>";
+
+            return Content(xml, "text/xml");
         }
     }
 }
