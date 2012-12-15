@@ -65,6 +65,18 @@ namespace Billboard.Data.Model
         public virtual decimal Price { get; set; }
 
         /// <summary>
+        /// Gets or sets the venue.
+        /// </summary>
+        /// <value>The venue.</value>
+        public virtual string Venue { get; set; }
+
+        /// <summary>
+        /// Gets or sets the messages displayed at once.
+        /// </summary>
+        /// <value>The messages displayed at once.</value>
+        public virtual byte MessagesDisplayedAtOnce { get; set; }
+
+        /// <summary>
         /// Gets or sets the timezone.
         /// </summary>
         /// <value>The timezone.</value>

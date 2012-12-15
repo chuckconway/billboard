@@ -62,10 +62,15 @@
             <label>Name</label>
             <input type="text" name="name" value="@Model.Event.Name" />
         </p>
-
+        
         <p>
-            <label>Message</label>
-            <textarea name="message" >@Model.Event.Message</textarea>
+            <label>Venue</label>
+            <input id="venue" type="text" name="venue" value="@Model.Event.Venue" />
+        </p>
+        
+        <p>
+            <label>Number of Messages Displayed at Once</label>
+            <input id="numberMessagesDisplayed" style="width:25px;" type="text" name="numberMessagesDisplayed" value="@Model.Event.NumberMessagesDisplayed" />
         </p>
         
         <p>
@@ -73,15 +78,16 @@
             @Html.DropDownList("timezone")
         </p>
         
-        <p>
-            <label>Start</label>
+        
+                <p>
+            <label>Begin and End times</label>
             <input type="text" id="datestart" name="datestart" value="@Model.Event.StartDate" class="date start" />
             <input type="text" id="timestart" name="timestart" value="@Model.Event.StartTime" class="time start" /> 
-        </p>
-        <p>
-            <label>End</label>
-            <input type="text" id="dateend" name="dateend" value="@Model.Event.EndDate"  class="date end" />
-            <input type="text" id="timeend" name="timeend" value="@Model.Event.EndTime"  class="time end" />
+            
+            to
+            
+            <input type="text" id="dateend" name="dateend" value="@Model.Event.EndDate" class="date end" />
+            <input type="text" id="timeend" name="timeend" value="@Model.Event.EndTime" class="time end" />
         </p>
         
         <p>

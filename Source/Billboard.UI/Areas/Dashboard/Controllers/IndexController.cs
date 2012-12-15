@@ -93,7 +93,9 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
                            StartTime = start.ToShortTimeString(),
                            StartDate = start.ToShortDateString(),
                            TimezoneName = a.Timezone.Name,
-                           UserId = a.UserId
+                           UserId = a.UserId,
+                           Venue = a.Venue,
+                           NumberMessagesDisplayed = a.MessagesDisplayedAtOnce
                        };
         }
 
@@ -127,9 +129,10 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
         [HttpGet]
         public ActionResult Add()
         {
+            var user = _authenticatedUser.GetUserInfo();
             var addEvent = new AddEventView();
 
-            ViewData["timezone"] = _timezoneHydration.GetAndSetSelectedTimezone();
+            ViewData["timezone"] = _timezoneHydration.GetAndSetSelectedTimezone(user.Timezone);
             return View(addEvent);
         }
 
@@ -169,6 +172,7 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
         public ActionResult Edit(int? id)
         {
             var editEvent = new EditEventView();
+
             if (id != null)
             {
                 var evt = GetEvent(id.Value);
@@ -290,6 +294,8 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
             var evt = new Event
                             {
                                 Name = newEvent.Name,
+                                Venue = newEvent.Venue,
+                                MessagesDisplayedAtOnce = newEvent.NumberMessagesDisplayed,
                                 FormattedNumber = newEvent.Formatted,
                                 Message = newEvent.Message,
                                 EndTime = toUtc(newEvent.DateEnd, newEvent.TimeEnd, newEvent.Timezone),
@@ -310,6 +316,8 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
             Func<string, string, int, DateTime> toUtc = (d, t, i) => ConvertToUtc(DateTime.Parse(d + " " + t), i);
 
             e.FormattedNumber = edit.Formatted;
+            e.Venue = edit.Venue;
+            e.MessagesDisplayedAtOnce = edit.NumberMessagesDisplayed;
             e.Name = edit.Name;
             e.Message = edit.Message;
             e.StartTime = toUtc(edit.DateStart, edit.TimeStart, edit.Timezone);

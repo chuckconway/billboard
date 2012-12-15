@@ -38,10 +38,10 @@ namespace Billboard.UI.Core.Services
             
             using (var trans = _session.BeginTransaction())
             {
-                //var i = _session.QueryOver<Alias>()
-                //                .Where(a => a.Event == evt)
-                //                .List()
-                //                .ToDictionary(a=>a.Number);
+                _aliasLookup = _session.QueryOver<Alias>()
+                                .Where(a => a.Event.Id == evt.Id)
+                                .List()
+                                .ToDictionary(a => a.Number);
 
                 trans.Commit();
             }
