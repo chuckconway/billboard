@@ -11,22 +11,45 @@
 
         var messages = [];
         var currentIndex = 0;
+        var maxMessage = @Model.Event.MessagesDisplayedAtOnce;
 
         $(function() {
             GetMessages();
             setInterval(GetMessages, 30000);
             
             UpdateUI();
-            setInterval(UpdateUI, 5000);
+            setInterval(UpdateUI, 10000);
         });
 
         function UpdateUI() {
 
             if (messages.length > 0) {
+
                 var message = messages.shift();
-                var element = $('<div>').attr('class','message').html('<h2>' + message.From + ' - ' + message.Time +'</h2><p>' + message.Message + '</p>');
-                $('div.messages').append(element);
-                //alert(messages.length);
+                $('<div>').attr('class','first').html('<h2>' + message.From + ' - ' + message.Time +'</h2><p>' + message.Message + '</p>')
+                    .hide()
+                    .prependTo('div.messages')
+                    .fadeIn('slow')
+                    .delay(8000)
+                    .fadeOut('slow', function() {
+                        //var self = $(this);
+
+                        //self.css('class', 'message')
+                        //    .delay(2000)
+                        //    .fadeIn('slow');
+                    });
+
+                //$('div.messages div.first').fadeOut('fast', function() {
+                //    //$('div.messages div.first').attr("class","message").fadeIn('slow', function() {
+                //    //    var msg = $('div.messages div');
+
+                //    //    if (msg.length > maxMessage ) {
+                //    //        msg.last().fadeOut('slow').remove();
+                //    //    }
+                //    //});
+                //});
+                
+
             }
         }
 
@@ -46,7 +69,5 @@
 }
 
 <div class="messages" >
-    <h1>@Model.Event.Name</h1>
-    <h2>Send a text message to @Model.Event.FormattedNumber</h2>
 </div>
 
