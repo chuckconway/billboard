@@ -71,6 +71,18 @@ namespace Billboard.UI.Areas.Dashboard.Models
         public decimal Price { get; set; }
 
         /// <summary>
+        /// Gets or sets the venue.
+        /// </summary>
+        /// <value>The venue.</value>
+        public string Venue { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number messages displayed.
+        /// </summary>
+        /// <value>The number messages displayed.</value>
+        public int NumberMessagesDisplayed { get; set; }
+
+        /// <summary>
         /// Gets or sets the timezone.
         /// </summary>
         /// <value>The timezone.</value>

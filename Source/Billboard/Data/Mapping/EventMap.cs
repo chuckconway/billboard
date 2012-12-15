@@ -31,7 +31,14 @@ namespace Billboard.Data.Mapping
                 .Nullable()
                 .Length(50);
 
+            Map(x => x.Venue)
+                .Nullable()
+                .Length(100);
+
             Map(x => x.UserId)
+                .Not.Nullable();
+
+            Map(x => x.MessagesDisplayedAtOnce)
                 .Not.Nullable();
 
             Map(x => x.Price)

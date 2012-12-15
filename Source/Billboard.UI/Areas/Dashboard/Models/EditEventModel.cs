@@ -24,6 +24,18 @@ namespace Billboard.UI.Areas.Dashboard.Models
         public string DateStart { get; set; }
 
         /// <summary>
+        /// Gets or sets the venue.
+        /// </summary>
+        /// <value>The venue.</value>
+        public string Venue { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number messages displayed.
+        /// </summary>
+        /// <value>The number messages displayed.</value>
+        public byte NumberMessagesDisplayed { get; set; }
+
+        /// <summary>
         /// Gets or sets the end time.
         /// </summary>
         /// <value>The end time.</value>
