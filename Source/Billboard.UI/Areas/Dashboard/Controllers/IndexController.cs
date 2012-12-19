@@ -86,7 +86,6 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
                            EndTime = end.ToShortTimeString(),
                            EndDate = end.ToShortDateString(),
                            FormattedNumber = a.FormattedNumber,
-                           Message = a.Message,
                            Name = a.Name,
                            Number = a.Number,
                            Price = a.Price,
@@ -94,8 +93,6 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
                            StartDate = start.ToShortDateString(),
                            TimezoneName = a.Timezone.Name,
                            UserId = a.UserId,
-                           Venue = a.Venue,
-                           NumberMessagesDisplayed = a.MessagesDisplayedAtOnce
                        };
         }
 
@@ -294,10 +291,9 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
             var evt = new Event
                             {
                                 Name = newEvent.Name,
-                                Venue = newEvent.Venue,
-                                MessagesDisplayedAtOnce = newEvent.NumberMessagesDisplayed,
+                                BackgroundColor = newEvent.BackgroundColor,
+                                TextColor = newEvent.TextColor,
                                 FormattedNumber = newEvent.Formatted,
-                                Message = newEvent.Message,
                                 EndTime = toUtc(newEvent.DateEnd, newEvent.TimeEnd, newEvent.Timezone),
                                 Number = newEvent.Number,
                                 StartTime = toUtc(newEvent.DateStart, newEvent.TimeStart, newEvent.Timezone),
@@ -316,10 +312,9 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
             Func<string, string, int, DateTime> toUtc = (d, t, i) => ConvertToUtc(DateTime.Parse(d + " " + t), i);
 
             e.FormattedNumber = edit.Formatted;
-            e.Venue = edit.Venue;
-            e.MessagesDisplayedAtOnce = edit.NumberMessagesDisplayed;
+            e.BackgroundColor = edit.BackgroundColor;
+            e.TextColor = edit.TextColor;
             e.Name = edit.Name;
-            e.Message = edit.Message;
             e.StartTime = toUtc(edit.DateStart, edit.TimeStart, edit.Timezone);
             e.Number = edit.Number;
             e.EndTime = toUtc(edit.DateEnd, edit.TimeEnd, edit.Timezone);

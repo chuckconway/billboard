@@ -60,7 +60,13 @@
         /// Gets or sets the number messages displayed.
         /// </summary>
         /// <value>The number messages displayed.</value>
-        public byte NumberMessagesDisplayed { get; set; }
+        public string BackgroundColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number messages displayed.
+        /// </summary>
+        /// <value>The number messages displayed.</value>
+        public string TextColor { get; set; }
 
         /// <summary>
         /// Gets or sets the formatted.

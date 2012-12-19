@@ -9,12 +9,12 @@
 @section Head{
     
     <style type="text/css" >
-        input.start{ width: 80px; }
-        input.end{ width: 80px; }
+        input.start { width: 80px; }
+        input.end { width: 80px; }
     </style>
 
     <script type="text/javascript" >
-        $(function () {
+        $(function() {
             $('input#datestart').datepicker({
                 'dateFormat': 'm/d/yy',
                 'autoclose': true
@@ -28,21 +28,27 @@
             $('input#timestart').timepicker();
             $('input#timeend').timepicker();
 
-            $('input#cancel').click(function () {
+            $('input#cancel').click(function() {
                 parent.$.fancybox.close();
                 return false;
             });
 
-            $('a#getnumber').click(function () {
+            $('span#backgroundColor').jPicker({ window: { expandable: true }});
+            $('span#textColor').jPicker({ window: { expandable: true } });
+
+            $('a#getnumber').click(function() {
                 var spinner = $('img#spinner');
                 spinner.show();
-                $.post('/api/getnumber', function (data) {
+                $.post('/api/getnumber', function(data) {
                     $('input#formatted').val(data.Formatted);
                     $('input#number').val(data.Number);
 
                     spinner.hide();
                 });
             });
+            
+            $.jPicker.List[0].color.active.val('ahex', '000000FF');
+            $.jPicker.List[1].color.active.val('ahex', 'FFFFFFFF');
         });
     </script>
 
@@ -50,6 +56,11 @@
     <link href="~/Script/plugins/datepicker/base.css" rel="stylesheet" />
     <script src="~/Script/plugins/timepicker/jquery.timepicker.min.js"></script>
     <link href="~/Script/plugins/timepicker/jquery.timepicker.css" rel="stylesheet" />
+
+    <script src="~/Script/plugins/colorpicker/js/colorpicker.js"></script>
+    <script src="~/Script/plugins/colorpicker/js/eye.js"></script>
+    <script src="/Script/plugins/colorpicker/js/layout.js"></script>
+    <script src="/Script/plugins/colorpicker/js/utils.js"></script>
 }
 
     <h2>Create Event</h2>
@@ -60,16 +71,6 @@
         <p>
             <label>Name</label>
             <input type="text" name="name"  />
-        </p>
-        
-        <p>
-            <label>Venue</label>
-            <input id="venue" type="text" name="venue" />
-        </p>
-        
-        <p>
-            <label>Number of Messages Displayed at Once</label>
-            <input id="numberMessagesDisplayed" style="width:25px;" type="text" name="numberMessagesDisplayed" value="10" />
         </p>
         
         <p>
@@ -87,6 +88,16 @@
             <input type="text" id="dateend" name="dateend" class="date end" />
             <input type="text" id="timeend" name="timeend" class="time end" />
         </p>
+        
+       <p>
+            <label>Board Colors</label>
+            <span style="margin-left: 20px;" >background <span id="backgroundColor"></span></span>
+           <span style="margin-left: 20px;" >text <span id="textColor"></span></span>
+           
+           <input type="hidden" id="backgroundColorValue" name="backgroundColor" value="#000000" />
+           <input type="hidden" id="textColorValue" name="textColor" value="#ffffff" />
+
+       </p>
         
         <p>
             <label>Number</label>

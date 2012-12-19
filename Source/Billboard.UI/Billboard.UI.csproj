@@ -125,6 +125,7 @@
     <Compile Include="Controllers\BoardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Core\AuthenticatedBaseController.cs" />
     <Compile Include="Core\HtmlHelpers\MessageHtmlHelperExtensions.cs" />
     <Compile Include="Core\IAuthenticatedUser.cs" />
@@ -158,6 +159,40 @@
     <Content Include="Content\images\spinner.gif" />
     <Content Include="Global.asax" />
     <Content Include="Script\frameworks\jquery.1.8.3.min.js" />
+    <Content Include="Script\plugins\colorpicker\css\colorpicker.css" />
+    <Content Include="Script\plugins\colorpicker\css\layout.css" />
+    <Content Include="Script\plugins\colorpicker\images\blank.gif" />
+    <Content Include="Script\plugins\colorpicker\images\colorpicker_background.png" />
+    <Content Include="Script\plugins\colorpicker\images\colorpicker_hex.png" />
+    <Content Include="Script\plugins\colorpicker\images\colorpicker_hsb_b.png" />
+    <Content Include="Script\plugins\colorpicker\images\colorpicker_hsb_h.png" />
+    <Content Include="Script\plugins\colorpicker\images\colorpicker_hsb_s.png" />
+    <Content Include="Script\plugins\colorpicker\images\colorpicker_indic.gif" />
+    <Content Include="Script\plugins\colorpicker\images\colorpicker_overlay.png" />
+    <Content Include="Script\plugins\colorpicker\images\colorpicker_rgb_b.png" />
+    <Content Include="Script\plugins\colorpicker\images\colorpicker_rgb_g.png" />
+    <Content Include="Script\plugins\colorpicker\images\colorpicker_rgb_r.png" />
+    <Content Include="Script\plugins\colorpicker\images\colorpicker_select.gif" />
+    <Content Include="Script\plugins\colorpicker\images\colorpicker_submit.png" />
+    <Content Include="Script\plugins\colorpicker\images\custom_background.png" />
+    <Content Include="Script\plugins\colorpicker\images\custom_hex.png" />
+    <Content Include="Script\plugins\colorpicker\images\custom_hsb_b.png" />
+    <Content Include="Script\plugins\colorpicker\images\custom_hsb_h.png" />
+    <Content Include="Script\plugins\colorpicker\images\custom_hsb_s.png" />
+    <Content Include="Script\plugins\colorpicker\images\custom_indic.gif" />
+    <Content Include="Script\plugins\colorpicker\images\custom_rgb_b.png" />
+    <Content Include="Script\plugins\colorpicker\images\custom_rgb_g.png" />
+    <Content Include="Script\plugins\colorpicker\images\custom_rgb_r.png" />
+    <Content Include="Script\plugins\colorpicker\images\custom_submit.png" />
+    <Content Include="Script\plugins\colorpicker\images\select.png" />
+    <Content Include="Script\plugins\colorpicker\images\select2.png" />
+    <Content Include="Script\plugins\colorpicker\images\slider.png" />
+    <Content Include="Script\plugins\colorpicker\index.html" />
+    <Content Include="Script\plugins\colorpicker\js\colorpicker.js" />
+    <Content Include="Script\plugins\colorpicker\js\eye.js" />
+    <Content Include="Script\plugins\colorpicker\js\jquery.js" />
+    <Content Include="Script\plugins\colorpicker\js\layout.js" />
+    <Content Include="Script\plugins\colorpicker\js\utils.js" />
     <Content Include="Script\plugins\datepicker\base.css" />
     <Content Include="Script\plugins\datepicker\base.js" />
     <Content Include="Script\plugins\fancybox\blank.gif" />
@@ -232,6 +267,8 @@
     <Content Include="Areas\Dashboard\Views\Index\Edit.cshtml" />
     <Content Include="Views\Shared\_Board.cshtml" />
     <Content Include="Areas\Dashboard\Views\Settings\Index.cshtml" />
+    <Content Include="Views\Messages\Event.cshtml" />
+    <Content Include="Views\Shared\_Message.cshtml" />
     <None Include="Web.DEV.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

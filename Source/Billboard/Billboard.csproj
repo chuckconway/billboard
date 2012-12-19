@@ -85,6 +85,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Access\ICommand.cs" />
+    <Compile Include="Data\Access\IProjection.cs" />
     <Compile Include="Data\Mapping\AliasMapping.cs" />
     <Compile Include="Data\Mapping\EventMap.cs" />
     <Compile Include="Data\Mapping\MessageMap.cs" />
@@ -101,7 +103,12 @@
     <Compile Include="Services\Twillio\ITwillioService.cs" />
     <Compile Include="Services\Twillio\TwillioService.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Data\Access\Comands\" />
+    <Folder Include="Data\Access\CommandHandlers\" />
+    <Folder Include="Data\Access\ProjectionHandlers\" />
+    <Folder Include="Data\Access\Projections\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

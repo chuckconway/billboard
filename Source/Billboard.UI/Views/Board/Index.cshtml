@@ -11,7 +11,6 @@
 
         var messages = [];
         var currentIndex = 0;
-        var maxMessage = @Model.Event.MessagesDisplayedAtOnce;
 
         $(function() {
             GetMessages();
@@ -32,24 +31,7 @@
                     .fadeIn('slow')
                     .delay(8000)
                     .fadeOut('slow', function() {
-                        //var self = $(this);
-
-                        //self.css('class', 'message')
-                        //    .delay(2000)
-                        //    .fadeIn('slow');
                     });
-
-                //$('div.messages div.first').fadeOut('fast', function() {
-                //    //$('div.messages div.first').attr("class","message").fadeIn('slow', function() {
-                //    //    var msg = $('div.messages div');
-
-                //    //    if (msg.length > maxMessage ) {
-                //    //        msg.last().fadeOut('slow').remove();
-                //    //    }
-                //    //});
-                //});
-                
-
             }
         }
 
@@ -66,6 +48,15 @@
         }
 
     </script>
+    
+    <style type="text/css" >
+        
+        body {
+            background-color: @Model.Event.BackgroundColor;
+            color: @Model.Event.TextColor;
+        }
+
+    </style>
 }
 
 <div class="messages" >

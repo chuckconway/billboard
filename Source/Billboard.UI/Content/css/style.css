@@ -1,8 +1,4 @@
-﻿body {
-    background-color: #000;
-    color: #fff;
-}
-
+﻿
 div.messages { width: 800px; position: fixed;
   top: 50%;
   left: 50%;
