@@ -53,12 +53,6 @@ namespace Billboard.Data.Model
         public virtual int UserId { get; set; }
 
         /// <summary>
-        /// Gets or sets the message.
-        /// </summary>
-        /// <value>The message.</value>
-        public virtual string Message { get; set; }
-
-        /// <summary>
         /// Gets or sets the price.
         /// </summary>
         /// <value>The price.</value>
@@ -68,13 +62,13 @@ namespace Billboard.Data.Model
         /// Gets or sets the venue.
         /// </summary>
         /// <value>The venue.</value>
-        public virtual string Venue { get; set; }
+        public virtual string BackgroundColor { get; set; }
 
         /// <summary>
-        /// Gets or sets the messages displayed at once.
+        /// Gets or sets the venue.
         /// </summary>
-        /// <value>The messages displayed at once.</value>
-        public virtual byte MessagesDisplayedAtOnce { get; set; }
+        /// <value>The venue.</value>
+        public virtual string TextColor { get; set; }
 
         /// <summary>
         /// Gets or sets the timezone.

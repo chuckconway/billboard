@@ -1,0 +1,15 @@
+﻿@model List<Billboard.Data.Model.Message>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "/Views/Shared/_Message.cshtml";
+}
+
+@foreach (var m in Model)
+{
+      <div>
+        <h2>@m.From</h2>
+        <p>@m.Body</p>
+    </div>
+}
+

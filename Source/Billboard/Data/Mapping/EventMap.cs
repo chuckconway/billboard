@@ -19,10 +19,6 @@ namespace Billboard.Data.Mapping
             Map(x => x.EndTime)
                 .Not.Nullable();
 
-            Map(x => x.Message)
-                .Nullable()
-                .Length(2000);
-
             Map(x => x.Number)
                 .Nullable()
                 .Length(50);
@@ -31,14 +27,13 @@ namespace Billboard.Data.Mapping
                 .Nullable()
                 .Length(50);
 
-            Map(x => x.Venue)
-                .Nullable()
-                .Length(100);
-
             Map(x => x.UserId)
                 .Not.Nullable();
 
-            Map(x => x.MessagesDisplayedAtOnce)
+            Map(x => x.BackgroundColor)
+                .Not.Nullable();
+
+            Map(x => x.TextColor)
                 .Not.Nullable();
 
             Map(x => x.Price)
