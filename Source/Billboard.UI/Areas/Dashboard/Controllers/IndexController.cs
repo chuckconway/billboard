@@ -93,6 +93,8 @@ namespace Billboard.UI.Areas.Dashboard.Controllers
                            StartDate = start.ToShortDateString(),
                            TimezoneName = a.Timezone.Name,
                            UserId = a.UserId,
+                           TextColor = a.TextColor,
+                           BackgroundColor = a.BackgroundColor
                        };
         }
 
