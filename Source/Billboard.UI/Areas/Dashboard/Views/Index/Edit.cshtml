@@ -18,14 +18,13 @@
     <script src="~/Script/plugins/timepicker/jquery.timepicker.min.js"></script>
     <link href="~/Script/plugins/timepicker/jquery.timepicker.css" rel="stylesheet" />
 
+    <link href="~/Script/plugins/colorpicker/css/colorpicker.css" rel="stylesheet" />
+    <link href="~/Script/plugins/colorpicker/css/layout.css" rel="stylesheet" />
+
     <script src="~/Script/plugins/colorpicker/js/colorpicker.js"></script>
     <script src="~/Script/plugins/colorpicker/js/eye.js"></script>
-    <script src="/Script/plugins/colorpicker/js/layout.js"></script>
-    <script src="/Script/plugins/colorpicker/js/utils.js"></script>
-
-    <link href="~/Script/plugins/colorpicker/css/layout.css" rel="stylesheet" />
-    <link href="~/Script/plugins/colorpicker/css/colorpicker.css" rel="stylesheet" />
-
+    <script src="~/Script/plugins/colorpicker/js/utils.js"></script>
+    <script src="~/Script/plugins/colorpicker/js/layout.js"></script>
 
     <script type="text/javascript" >
         $(function () {
@@ -44,11 +43,37 @@
                 return false;
             });
             
-            //$('span#backgroundColor').jPicker({ window: { expandable: true } });
-            //$('span#textColor').jPicker({ window: { expandable: true } });
+            $('#textColorValue').ColorPicker({
+                onSubmit: function (hsb, hex, rgb, el) {
+                    $(el).val(hex);
+                    $(el).ColorPickerHide();
+                },
+                onBeforeShow: function () {
+                    $(this).ColorPickerSetColor(this.value);
+                },
+                onChange: function(cal, color) {
+                    $('#textColorValue').val(color);
+                    $('span#textswatch').css('backgroundColor', '#' + color);
+                }
+            });
+            
+            $('#backgroundColorValue').ColorPicker({
+                onSubmit: function (hsb, hex, rgb, el) {
+                    $(el).val(hex);
+                    $(el).ColorPickerHide();
+                },
+                onBeforeShow: function () {
+                    $(this).ColorPickerSetColor(this.value);
+                },
+                onChange: function (cal, color) {
+                    $('#backgroundColorValue').val(color);
+                    $('span#backgroundswatch').css('backgroundColor', '#' + color);
+                }
+            });
 
             $('input#timestart').timepicker();
             $('input#timeend').timepicker();
+
             
             $('a#getnumber').click(function () {
                 var spinner = $('img#spinner');
@@ -60,29 +85,6 @@
                     spinner.hide();
                 });
             });
-            
-            //$('input.Ok').live('click', function () {
-                
-            //});
-            
-@*            $.jPicker.List[0].color.active.val('ahex', '@Model.Event.BackgroundColor.Replace("#", string.Empty)FF)');
-            $.jPicker.List[1].color.active.val('ahex', '@Model.Event.BackgroundColor.Replace("#", string.Empty)FF');*@
-            
-            $('#backgroundColor').ColorPicker({
-                color: '#0000ff',
-                onShow: function (colpkr) {
-                    $(colpkr).fadeIn(500);
-                    return false;
-                },
-                onHide: function (colpkr) {
-                    $(colpkr).fadeOut(500);
-                    return false;
-                },
-                onChange: function (hsb, hex, rgb) {
-                    $('#backgroundColor div').css('backgroundColor', '#' + hex);
-                }
-            });
-
         });
     </script>
 
@@ -117,13 +119,16 @@
             <input type="text" id="timeend" name="timeend" value="@Model.Event.EndTime" class="time end" />
         </p>
         
-       <p>
-            <label>Board Colors</label>
-            <div style="margin-left: 20px;" >background <div id="backgroundColor"></div></div>
-           <div style="margin-left: 20px;" >text <div id="textColor"></div></div>
-           
-           <input type="hidden" id="backgroundColorValue" name="backgroundColor" value="@Model.Event.BackgroundColor" />
-           <input type="hidden" id="textColorValue" name="textColor" value="@Model.Event.TextColor" />
+        <p>
+            <label>Background Color</label>
+            <input type="text" style="width:55px;" id="backgroundColorValue" name="backgroundColor" value="@Model.Event.BackgroundColor" />
+             <span id="backgroundswatch" style="width: 20px;height: 20px;border:1px #000 solid; display: inline-block;background-color: #@Model.Event.TextColor;" ></span>
+        </p>
+        
+        <p>
+           <label>Text Color</label>
+            <input type="text" style="width:55px;" id="textColorValue" name="textColor" value="@Model.Event.TextColor" />
+            <span id="textswatch" style="width: 20px;height: 20px;border:1px #000 solid; display: inline-block;background-color: #@Model.Event.TextColor;" ></span>
        </p>
         
         <p>
