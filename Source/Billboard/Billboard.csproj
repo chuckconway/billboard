@@ -66,6 +66,9 @@
     <Reference Include="NHibernate">
       <HintPath>..\..\Dependencies\nHibernate\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\Dependencies\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -86,7 +89,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Access\ICommand.cs" />
+    <Compile Include="Data\Access\ICommandHandler.cs" />
     <Compile Include="Data\Access\IProjection.cs" />
+    <Compile Include="Data\Access\IProjectionHandler.cs" />
     <Compile Include="Data\Mapping\AliasMapping.cs" />
     <Compile Include="Data\Mapping\EventMap.cs" />
     <Compile Include="Data\Mapping\MessageMap.cs" />
@@ -97,6 +102,12 @@
     <Compile Include="Data\Model\Event.cs" />
     <Compile Include="Data\Model\Timezone.cs" />
     <Compile Include="Data\Model\User.cs" />
+    <Compile Include="Infrastructure\IInjection.cs" />
+    <Compile Include="Infrastructure\Processors\CommandProcessor.cs" />
+    <Compile Include="Infrastructure\Processors\ICommandProcessor.cs" />
+    <Compile Include="Infrastructure\Processors\IProjectionProcessor.cs" />
+    <Compile Include="Infrastructure\Processors\ProjectionProcessor.cs" />
+    <Compile Include="Infrastructure\StructureMapInjection.cs" />
     <Compile Include="Json\JsonResolver.cs" />
     <Compile Include="Json\JsonSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
