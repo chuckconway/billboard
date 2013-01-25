@@ -159,6 +159,7 @@
     <Content Include="Content\images\spinner.gif" />
     <Content Include="Global.asax" />
     <Content Include="Script\frameworks\jquery.1.8.3.min.js" />
+    <Content Include="Script\messageEngine.js" />
     <Content Include="Script\plugins\colorpicker\css\colorpicker.css" />
     <Content Include="Script\plugins\colorpicker\css\layout.css" />
     <Content Include="Script\plugins\colorpicker\images\blank.gif" />
@@ -269,6 +270,8 @@
     <Content Include="Areas\Dashboard\Views\Settings\Index.cshtml" />
     <Content Include="Views\Messages\Event.cshtml" />
     <Content Include="Views\Shared\_Message.cshtml" />
+    <Content Include="Views\Board\Single.cshtml" />
+    <Content Include="Views\Board\Rolling.cshtml" />
     <None Include="Web.DEV.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
